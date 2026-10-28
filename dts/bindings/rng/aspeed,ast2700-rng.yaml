@@ -1,0 +1,12 @@
+# Copyright (c) 2026 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  ASPEED AST2700 SCU1 random number generator.
+
+  This node is a child of the SCU1 syscon node and has no reg property.
+  The RNG registers are accessed through the parent syscon.
+
+compatible: "aspeed,ast2700-rng"
+
+include: base.yaml

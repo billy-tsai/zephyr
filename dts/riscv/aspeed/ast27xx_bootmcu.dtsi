@@ -49,6 +49,10 @@
 			compatible = "syscon";
 			reg = <0x14c02000 0x2000>;
 
+			rng: rng {
+				compatible = "aspeed,ast2700-rng";
+			};
+
 			sysclk1: system-clock {
 				compatible = "aspeed,ast27xx-scu1-clock";
 				#clock-cells = <1>;
