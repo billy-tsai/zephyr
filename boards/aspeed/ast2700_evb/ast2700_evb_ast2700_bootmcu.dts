@@ -12,6 +12,10 @@
 	model = "Aspeed AST2700 Evaluation Board BootMCU";
 	compatible = "aspeed,ast2700-evb";
 
+	aliases {
+		watchdog0 = &wdt0;
+	};
+
 	chosen {
 		zephyr,sram = &sram;
 		zephyr,console = &uart12;
@@ -22,5 +26,9 @@
 
 &uart12 {
 	current-speed = <115200>;
+	status = "okay";
+};
+
+&wdt0 {
 	status = "okay";
 };

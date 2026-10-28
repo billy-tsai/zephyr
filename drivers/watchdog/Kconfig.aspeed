@@ -1,0 +1,12 @@
+# Copyright (c) 2026 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+config WDT_AST27XX
+	bool "ASPEED AST27xx watchdog driver"
+	default y
+	depends on DT_HAS_ASPEED_AST2700_WDT_ENABLED
+	select HAS_WDT_DISABLE_AT_BOOT
+	select HAS_WDT_NO_CALLBACKS
+	help
+	  Enable the watchdog driver for ASPEED AST27xx SoCs. Only SoC reset
+	  without an interrupt callback is supported.

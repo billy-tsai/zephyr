@@ -11,4 +11,5 @@ ram: 244
 supported:
   - entropy
   - serial
+  - watchdog
 vendor: aspeed
