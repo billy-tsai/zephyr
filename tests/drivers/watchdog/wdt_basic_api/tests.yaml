@@ -15,6 +15,7 @@ tests:
        CONFIG_SOC_SERIES_IMXRT6XX or CONFIG_SOC_SERIES_IMXRT5XX or
        CONFIG_SOC_FAMILY_GD_GD32 or SOC_SERIES_GD32VF103 or CONFIG_SOC_MAX32655)
     platform_exclude:
+      - ast2700_evb/ast2700/bootmcu
       - lpcxpresso55s69/lpc55s69/cpu0/ns
       - mec15xxevb_assy6853
       - s32z2xxdc2/s32z270/rtu0
