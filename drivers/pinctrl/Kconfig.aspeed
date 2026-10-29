@@ -1,0 +1,11 @@
+# Copyright (c) 2026 ASPEED Technology Inc.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+config PINCTRL_AST27XX_SOC1
+	bool "ASPEED AST27xx SoC1 pin controller driver"
+	default y
+	depends on DT_HAS_ASPEED_AST2700_SOC1_PINCTRL_ENABLED
+	select SYSCON
+	help
+	  Enable pin control for the AST2700 I/O die through the SCU1 syscon.

@@ -1,0 +1,47 @@
+# Copyright (c) 2026 ASPEED Technology Inc.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  ASPEED AST2700 SoC1 (I/O die) pin controller, a child of the SCU1 syscon.
+
+  Each child describes a state containing groups of pins. Each group has a
+  pinmux array of 32-bit cells built with AST27XX_SOC1_PINMUX(ball, func) or
+  the named signal macros from
+  <zephyr/dt-bindings/pinctrl/ast27xx-soc1-pinctrl.h>. Bits [15:8] identify
+  the ball, bits [2:0] select its function, and all other bits must be zero.
+  Ball indices are C25=0, C24=1, A17=2, A16=3, M16=4 and A15=5.
+  M16 and A15 support function 0 (GPIO) and 1 (FWSPIDQ2 and FWSPIDQ3).
+  Dedicated FWSPI pins use function 0 without programming a mux register.
+
+  Groups may specify bias-disable for M16 and A15, and aspeed,drive-strength
+  for all supported balls. Omitted properties leave the corresponding
+  hardware settings unchanged.
+
+compatible: "aspeed,ast2700-soc1-pinctrl"
+
+include: base.yaml
+
+child-binding:
+  description: Pin configuration state.
+
+  child-binding:
+    description: Pins sharing configuration properties.
+
+    include:
+      - name: pincfg-node.yaml
+        property-allowlist:
+          - bias-disable
+
+    properties:
+      pinmux:
+        type: array
+        required: true
+        description: Ball and function selections for this group.
+
+      aspeed,drive-strength:
+        type: int
+        enum: [0, 1, 2, 3]
+        description: |
+          Output drive strength level, from 0 (weakest) to 3 (strongest).
+          These levels do not specify a current in milliamperes.
