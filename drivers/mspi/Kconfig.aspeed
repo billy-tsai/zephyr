@@ -1,0 +1,26 @@
+# Copyright (c) 2026 ASPEED Technology Inc.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig MSPI_AST27XX_FMC
+	bool "ASPEED AST2700 FMC MSPI controller driver"
+	default y
+	depends on DT_HAS_ASPEED_AST2700_FMC_ENABLED
+	select CLOCK_CONTROL
+	select PINCTRL if $(dt_compat_any_has_prop,$(DT_COMPAT_ASPEED_AST2700_FMC),pinctrl-0)
+	help
+	  Enable polling transfers through the AST2700 firmware SPI flash
+	  controller. Supports single I/O on CE0 with 3-byte or 4-byte addresses.
+
+if MSPI_AST27XX_FMC
+
+config MSPI_AST27XX_FMC_DMA
+	bool "DMA reads"
+	default y
+	depends on MSPI_DMA
+	help
+	  Use the controller's internal DMA engine for aligned reads larger than
+	  128 bytes. Other transfers use programmed I/O, including DMA requests
+	  that do not meet the controller's constraints. Completion is polled.
+
+endif # MSPI_AST27XX_FMC

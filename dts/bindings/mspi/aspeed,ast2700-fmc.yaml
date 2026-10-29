@@ -1,0 +1,35 @@
+# Copyright (c) 2026 ASPEED Technology Inc.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+description: ASPEED AST2700 firmware SPI flash controller
+
+compatible: "aspeed,ast2700-fmc"
+
+include: [mspi-controller.yaml, pinctrl-device.yaml]
+
+properties:
+  reg:
+    required: true
+    description: Controller registers followed by the CE0 AHB data window.
+
+  clocks:
+    required: true
+    description: HCLK source clock.
+
+  clock-names:
+    required: true
+    description: Name of the HCLK source clock, hclk.
+
+  num-cs:
+    type: int
+    required: true
+    const: 1
+    description: Number of supported chip selects. Only CE0 is supported.
+
+  packet-data-limit:
+    default: 33554432
+    description: |
+      Maximum data length per packet. The default is the 32 MiB limit of the
+      controller's 25-bit DMA length register. A smaller limit can be used to
+      bound the duration of a single transaction.
