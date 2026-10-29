@@ -65,6 +65,10 @@
 			compatible = "syscon";
 			reg = <0x14c02000 0x2000>;
 
+			pinctrl: pinctrl {
+				compatible = "aspeed,ast2700-soc1-pinctrl";
+			};
+
 			rng: rng {
 				compatible = "aspeed,ast2700-rng";
 			};
