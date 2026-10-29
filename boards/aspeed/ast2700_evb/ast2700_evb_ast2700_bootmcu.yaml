@@ -10,6 +10,7 @@ toolchain:
 ram: 244
 supported:
   - entropy
+  - otp
   - serial
   - watchdog
 vendor: aspeed

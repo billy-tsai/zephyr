@@ -1,0 +1,12 @@
+# Copyright (c) 2026 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+description: ASPEED AST2700 OTP controller
+
+compatible: "aspeed,ast2700-otp"
+
+include: base.yaml
+
+properties:
+  reg:
+    required: true
