@@ -16,3 +16,12 @@ config CLOCK_CONTROL_AST27XX
 	help
 	  This option enables the SCU1 clock control driver for the ASPEED
 	  AST27XX series SoC.
+
+config CLOCK_CONTROL_AST27XX_SCU0
+	bool "ASPEED AST27XX SCU0 clock control driver"
+	default y
+	depends on DT_HAS_ASPEED_AST27XX_SCU0_CLOCK_ENABLED
+	select SYSCON
+	help
+	  This option enables the SCU0 clock control driver for the ASPEED
+	  AST27XX series SoC.

@@ -7,6 +7,41 @@
 #ifndef ZEPHYR_INCLUDE_DT_BINDINGS_CLOCK_AST27XX_H_
 #define ZEPHYR_INCLUDE_DT_BINDINGS_CLOCK_AST27XX_H_
 
+/* SCU0 clock gates at SCU0 0x240 */
+#define SCU0_CLK_GATE_MCLK         (0)
+#define SCU0_CLK_GATE_ECLK         (1)
+#define SCU0_CLK_GATE_2DCLK        (2)
+#define SCU0_CLK_GATE_VCLK         (3)
+#define SCU0_CLK_GATE_BCLK         (4)
+#define SCU0_CLK_GATE_VGA0CLK      (5)
+#define SCU0_CLK_GATE_REFCLK       (6)
+#define SCU0_CLK_GATE_PORTBUSB2CLK (7)
+#define SCU0_CLK_GATE_UHCICLK      (9)
+#define SCU0_CLK_GATE_VGA1CLK      (10)
+#define SCU0_CLK_GATE_DDRPHYCLK    (11)
+#define SCU0_CLK_GATE_E2M0CLK      (12)
+#define SCU0_CLK_GATE_HACCLK       (13)
+#define SCU0_CLK_GATE_PORTAUSB2CLK (14)
+#define SCU0_CLK_GATE_UART4CLK     (15)
+#define SCU0_CLK_GATE_SLICLK       (16)
+#define SCU0_CLK_GATE_DACCLK       (17)
+#define SCU0_CLK_GATE_DP           (18)
+#define SCU0_CLK_GATE_E2M1CLK      (19)
+#define SCU0_CLK_GATE_CRT0CLK      (20)
+#define SCU0_CLK_GATE_CRT1CLK      (21)
+#define SCU0_CLK_GATE_ECDSACLK     (23)
+#define SCU0_CLK_GATE_RSACLK       (24)
+#define SCU0_CLK_GATE_RVAS0CLK     (25)
+#define SCU0_CLK_GATE_UFSCLK       (26)
+#define SCU0_CLK_GATE_EMMCCLK      (27)
+#define SCU0_CLK_GATE_RVAS1CLK     (28)
+
+#define SCU0_CLK_GATE_NUM (SCU0_CLK_GATE_RVAS1CLK + 1)
+
+/* SCU0 clocks that are not gates */
+#define SCU0_CLK_HPLL (SCU0_CLK_GATE_NUM + 0)
+#define SCU0_CLK_MPLL (SCU0_CLK_GATE_NUM + 1)
+
 /* SCU1 clock gates: bank 0 at SCU1 0x240, bank 1 at SCU1 0x260 */
 #define SCU1_CLK_GATE_L0CLK     (0)
 #define SCU1_CLK_GATE_L1CLK     (1)
