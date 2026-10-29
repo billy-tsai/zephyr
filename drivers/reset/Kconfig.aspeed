@@ -7,3 +7,12 @@ config RESET_AST10X0
 	depends on DT_HAS_ASPEED_AST10X0_RESET_ENABLED
 	help
 	  This option enables the reset driver for ASPEED AST10X0 series SOC.
+
+config RESET_AST27XX
+	bool "ASPEED AST27XX reset driver"
+	default y
+	depends on DT_HAS_ASPEED_AST27XX_RESET_ENABLED
+	select SYSCON
+	help
+	  This option enables the SCU0 and SCU1 reset driver for the ASPEED
+	  AST27XX series SoC.

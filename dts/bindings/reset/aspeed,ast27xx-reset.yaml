@@ -1,0 +1,20 @@
+# Copyright (c) 2026 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  ASPEED AST27XX reset controller.
+
+  The node is a child of an SCU0 or SCU1 syscon node, whose register block
+  holds the reset control and clear registers. The reset specifier cell is
+  an ID from include/zephyr/dt-bindings/reset/ast27xx_reset.h.
+
+compatible: "aspeed,ast27xx-reset"
+
+include: [reset-controller.yaml, base.yaml]
+
+properties:
+  "#reset-cells":
+    const: 1
+
+reset-cells:
+  - id
