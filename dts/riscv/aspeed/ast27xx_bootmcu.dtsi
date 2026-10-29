@@ -40,6 +40,17 @@
 		#size-cells = <1>;
 		ranges;
 
+		fmc: mspi@14000000 {
+			compatible = "aspeed,ast2700-fmc";
+			reg = <0x14000000 0x200>, <0x20000000 0x10000000>;
+			clocks = <&sysclk1 SCU1_CLK_AHB>;
+			clock-names = "hclk";
+			num-cs = <1>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			status = "disabled";
+		};
+
 		syscon0: syscon@12c02000 {
 			compatible = "syscon";
 			reg = <0x12c02000 0x2000>;
