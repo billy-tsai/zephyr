@@ -7,12 +7,14 @@
 /dts-v1/;
 
 #include <aspeed/ast27xx_bootmcu.dtsi>
+#include <zephyr/dt-bindings/pinctrl/ast27xx-soc1-pinctrl.h>
 
 / {
 	model = "Aspeed AST2700 Evaluation Board BootMCU";
 	compatible = "aspeed,ast2700-evb";
 
 	aliases {
+		mspi0 = &fmc;
 		watchdog0 = &wdt0;
 	};
 
@@ -24,8 +26,39 @@
 	};
 };
 
+&fmc {
+	status = "okay";
+	pinctrl-0 = <&fmc_default>;
+	pinctrl-names = "default";
+
+	fmc_cs0: flash@0 {
+		compatible = "jedec,nor";
+		reg = <0>;
+		mspi-max-frequency = <25000000>;
+		mspi-io-mode = "MSPI_IO_MODE_SINGLE";
+		mspi-endian = "MSPI_BIG_ENDIAN";
+		size = <0x40000000>;
+		jedec-id = [ef 40 21];
+		use-4byte-addressing;
+	};
+};
+
 &otp {
 	status = "okay";
+};
+
+&pinctrl {
+	fmc_default: fmc_default {
+		group1 {
+			pinmux = <FWSPICS0_C25 FWSPICK_C24 FWSPIMOSI_A17 FWSPIMISO_A16>;
+			aspeed,drive-strength = <2>;
+		};
+
+		group2 {
+			pinmux = <FWSPIDQ2_M16 FWSPIDQ3_A15>;
+			aspeed,drive-strength = <2>;
+		};
+	};
 };
 
 &uart12 {
