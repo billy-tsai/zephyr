@@ -1,0 +1,36 @@
+# Copyright (c) 2026 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig MBOX_AST27XX
+	bool "ASPEED AST27xx MBOX driver"
+	default y
+	depends on DT_HAS_ASPEED_AST2700_MAILBOX_ENABLED
+	help
+	  Enable the AST2700 mailbox controller with four 32-byte channels per
+	  peer. All instances share a polling thread. Callbacks execute in this
+	  driver thread, rather than in interrupt context, and may use blocking
+	  APIs. A callback delays polling of all channels until it returns.
+
+if MBOX_AST27XX
+
+config MBOX_AST27XX_POLL_INTERVAL_MS
+	int "Polling interval in milliseconds"
+	default 1
+	range 1 1000
+	help
+	  Interval between mailbox checks while any receive channel is enabled.
+	  The polling thread sleeps on a semaphore when all channels are disabled.
+
+config MBOX_AST27XX_THREAD_STACK_SIZE
+	int "Polling thread stack size"
+	default 1024
+	help
+	  Stack size in bytes for the shared polling thread and its callbacks.
+
+config MBOX_AST27XX_THREAD_PRIORITY
+	int "Polling thread priority"
+	default 0
+	help
+	  Priority of the shared polling thread that executes receive callbacks.
+
+endif # MBOX_AST27XX
