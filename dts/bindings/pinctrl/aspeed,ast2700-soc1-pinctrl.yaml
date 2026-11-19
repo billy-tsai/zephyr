@@ -1,0 +1,77 @@
+# Copyright (c) 2026 ASPEED Technology Inc.
+#
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  ASPEED AST2700 SoC1 (I/O die) pin controller, a child of the SCU1 syscon.
+
+  Each child node describes one pin function on one ball: the SCU1 field
+  that selects the function, and the SCU1 fields of the ball's pull-down
+  disable and drive strength. The SoC devicetree defines a node for every
+  function of every ball, in <aspeed/ast27xx_soc1_pinctrl.dtsi>. A device
+  lists the nodes of its pins in pinctrl-N, and a board sets bias-disable
+  or drive-strength on a node to configure that pin.
+
+  Register fields are built with ASPEED_G7_PINMUX(reg, bit, func) and
+  ASPEED_G7_PINCFG(reg, bit, width) from
+  <zephyr/dt-bindings/pinctrl/aspeed-g7-pinctrl.h>.
+
+compatible: "aspeed,ast2700-soc1-pinctrl"
+
+include: base.yaml
+
+properties:
+  aspeed,num-balls:
+    type: int
+    default: 226
+    description: |
+      Number of ball IDs, AST27XX_SOC1_BALL_NUM. Bounds the aspeed,ball
+      values and the table of the ball conflict check.
+
+  aspeed,drive-strength-step-ma:
+    type: int
+    default: 4
+    description: |
+      Current per step of a drive-strength field. drive-strength is written
+      as drive-strength / step - aspeed,drive-strength-first-step.
+
+  aspeed,drive-strength-first-step:
+    type: int
+    default: 1
+    description: |
+      Number of steps encoded by a drive-strength field value of 0.
+
+child-binding:
+  description: One pin function on one ball.
+
+  include:
+    - name: pincfg-node.yaml
+      property-allowlist:
+        - bias-disable
+        - drive-strength
+
+  properties:
+    aspeed,ball:
+      type: int
+      required: true
+      description: |
+        Ball ID, AST27XX_SOC1_BALL_<name>. Some IDs stand for a
+        controller-wide mode bit rather than a physical ball.
+
+    aspeed,mux:
+      type: int
+      description: |
+        ASPEED_G7_PINMUX() field that selects this function. Omitted on balls
+        with a single function.
+
+    aspeed,bias-disable-field:
+      type: int
+      description: |
+        ASPEED_G7_PINCFG() field written with 1 when bias-disable is set.
+
+    aspeed,drive-strength-field:
+      type: int
+      description: |
+        ASPEED_G7_PINCFG() field written with the code of drive-strength.
+        drive-strength is in mA and must be a multiple of
+        aspeed,drive-strength-step-ma that the field can encode.

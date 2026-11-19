@@ -49,6 +49,10 @@
 			compatible = "syscon";
 			reg = <0x14c02000 0x2000>;
 
+			pinctrl: pinctrl {
+				compatible = "aspeed,ast2700-soc1-pinctrl";
+			};
+
 			sysclk1: system-clock {
 				compatible = "aspeed,ast27xx-scu1-clock";
 				#clock-cells = <1>;
@@ -70,3 +74,5 @@
 		};
 	};
 };
+
+#include <aspeed/ast27xx_soc1_pinctrl.dtsi>

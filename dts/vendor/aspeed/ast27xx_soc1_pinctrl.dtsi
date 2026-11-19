@@ -1,0 +1,3151 @@
+/*
+ * Copyright (c) 2026 ASPEED Technology Inc.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <zephyr/dt-bindings/pinctrl/ast27xx-soc1-pinctrl.h>
+
+&pinctrl {
+	/* SCU1 0x3B0: USB Controller Register (PORTC/PORTD mode) */
+	/omit-if-no-ref/ pin_usb2cud: usb2cud {
+		aspeed,ball = <AST27XX_SOC1_BALL_PORTC_MODE>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x3b0, 0, 0)>;
+	};
+
+	/omit-if-no-ref/ pin_usb2cd: usb2cd {
+		aspeed,ball = <AST27XX_SOC1_BALL_PORTC_MODE>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x3b0, 0, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_usb2ch: usb2ch {
+		aspeed,ball = <AST27XX_SOC1_BALL_PORTC_MODE>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x3b0, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_usb2cu: usb2cu {
+		aspeed,ball = <AST27XX_SOC1_BALL_PORTC_MODE>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x3b0, 0, 3)>;
+	};
+
+	/omit-if-no-ref/ pin_usb2dd: usb2dd {
+		aspeed,ball = <AST27XX_SOC1_BALL_PORTD_MODE>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x3b0, 2, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_usb2dh: usb2dh {
+		aspeed,ball = <AST27XX_SOC1_BALL_PORTD_MODE>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x3b0, 2, 2)>;
+	};
+
+	/* SCU1 0x400: Multi-function Pin Control #1 */
+	/omit-if-no-ref/ pin_espi1_0: espi1-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 0, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc1_0: lpc1-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 0, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 0, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_sd_0: sd-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 0, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 0, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c0scl: di2c0scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_C16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 0, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 0, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_0: vpi-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 0, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 0, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_espi1_1: espi1-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 1, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 2, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc1_1: lpc1-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 4, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 1, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 2, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_sd_1: sd-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 4, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 1, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 2, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c1scl: di2c1scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_C14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 4, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 1, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 2, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_1: vpi-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 4, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 1, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 2, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_espi1_2: espi1-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C11>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 2, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 4, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc1_2: lpc1-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C11>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 8, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 2, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 4, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_sd_2: sd-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C11>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 8, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 2, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 4, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c3scl: di2c3scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_C11>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 8, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 2, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 4, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_2: vpi-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C11>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 8, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 2, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 4, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_espi1_3: espi1-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D9>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 3, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 6, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc1_3: lpc1-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D9>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 12, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 3, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 6, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_sd_3: sd-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D9>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 12, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 3, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 6, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c0sda: di2c0sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_D9>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 12, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 3, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 6, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_3: vpi-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D9>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 12, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 3, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 6, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_espi1_4: espi1-4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_F14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 4, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc1_4: lpc1-4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_F14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 16, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 4, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_sd_4: sd-4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_F14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 16, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 4, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c1sda: di2c1sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_F14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 16, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 4, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_4: vpi-4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_F14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 16, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 4, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_espi1_5: espi1-5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D10>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 5, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 10, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc1_5: lpc1-5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D10>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 20, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 5, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 10, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_sd_5: sd-5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D10>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 20, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 5, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 10, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c2scl: di2c2scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_D10>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 20, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 5, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 10, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_5: vpi-5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D10>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 20, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 5, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 10, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_espi1_6: espi1-6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 6, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 12, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc1_6: lpc1-6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 24, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 6, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 12, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_sd_6: sd-6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 24, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 6, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 12, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c2sda: di2c2sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_C12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 24, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 6, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 12, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_espi1_7: espi1-7 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 7, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 14, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc1_7: lpc1-7 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 28, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 7, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 14, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_sd_7: sd-7 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 28, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 7, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 14, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c3sda: di2c3sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_C13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x400, 28, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 7, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 14, 2)>;
+	};
+
+	/* SCU1 0x404: Multi-function Pin Control #2 */
+	/omit-if-no-ref/ pin_tach0: tach0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 8, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_thru0_0: thru0-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 0, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 8, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_8: vpi-8 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 0, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 8, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_tach1: tach1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 9, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_thru0_1: thru0-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 4, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 9, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_9: vpi-9 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 4, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 9, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_tach2: tach2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 10, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_thru1_0: thru1-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 8, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 10, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_10: vpi-10 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 8, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 10, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_tach3: tach3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_U22>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 11, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_thru1_1: thru1-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_U22>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 12, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 11, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_11: vpi-11 {
+		aspeed,ball = <AST27XX_SOC1_BALL_U22>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 12, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 11, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_tach4: tach4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_V21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 12, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_12: vpi-12 {
+		aspeed,ball = <AST27XX_SOC1_BALL_V21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 16, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 12, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ncts5: ncts5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_V21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 16, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 12, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_tach5: tach5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_N26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 13, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_13: vpi-13 {
+		aspeed,ball = <AST27XX_SOC1_BALL_N26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 20, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 13, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ndcd5: ndcd5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_N26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 20, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 13, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_tach6: tach6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_P25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 14, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_14: vpi-14 {
+		aspeed,ball = <AST27XX_SOC1_BALL_P25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 24, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 14, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ndsr5: ndsr5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_P25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 24, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 14, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_tach7: tach7 {
+		aspeed,ball = <AST27XX_SOC1_BALL_N25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 15, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_15: vpi-15 {
+		aspeed,ball = <AST27XX_SOC1_BALL_N25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 28, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 15, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_nri5: nri5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_N25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x404, 28, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 15, 1)>;
+	};
+
+	/* SCU1 0x408: Multi-function Pin Control #3 */
+	/omit-if-no-ref/ pin_tach8: tach8 {
+		aspeed,ball = <AST27XX_SOC1_BALL_V23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 16, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_16: vpi-16 {
+		aspeed,ball = <AST27XX_SOC1_BALL_V23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 0, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 16, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ndtr5: ndtr5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_V23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 0, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 16, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_tach9: tach9 {
+		aspeed,ball = <AST27XX_SOC1_BALL_W22>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 17, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_17: vpi-17 {
+		aspeed,ball = <AST27XX_SOC1_BALL_W22>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 4, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 17, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_nrts5: nrts5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_W22>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 4, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 17, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_tach10: tach10 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 18, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_salt12: salt12 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 8, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 18, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_18: vpi-18 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 8, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 18, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ncts6: ncts6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 8, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 18, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_tach11: tach11 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 19, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_salt13: salt13 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 12, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 19, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_19: vpi-19 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 12, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 19, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ndcd6: ndcd6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 12, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 19, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_tach12: tach12 {
+		aspeed,ball = <AST27XX_SOC1_BALL_P26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 20, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_salt14: salt14 {
+		aspeed,ball = <AST27XX_SOC1_BALL_P26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 16, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 20, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_20: vpi-20 {
+		aspeed,ball = <AST27XX_SOC1_BALL_P26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 16, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 20, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ndsr6: ndsr6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_P26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 16, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 20, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_tach13: tach13 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 21, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_salt15: salt15 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 20, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 21, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_21: vpi-21 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 20, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 21, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_nri6: nri6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 20, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 21, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_tach14: tach14 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 22, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc0_0: lpc0-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 24, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 22, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_22: vpi-22 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 24, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 22, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ndtr6: ndtr6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 24, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 22, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_tach15: tach15 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 23, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc0_1: lpc0-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 28, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 23, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_23: vpi-23 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 28, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 23, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_nrts6: nrts6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x408, 28, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 23, 1)>;
+	};
+
+	/* SCU1 0x40C: Multi-function Pin Control #4 */
+	/omit-if-no-ref/ pin_pwm0: pwm0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 24, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_siopbon0: siopbon0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 0, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 24, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_24: vpi-24 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 0, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 24, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_spim0_0: spim0-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 0, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 24, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_pwm1: pwm1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 25, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_siopbin0: siopbin0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 4, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 25, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_25: vpi-25 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 4, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 25, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_spim0_1: spim0-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 4, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 25, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_pwm2: pwm2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 26, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sioscin0: sioscin0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 8, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 26, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_26: vpi-26 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 8, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 26, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_spim0_2: spim0-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 8, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 26, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_pwm3: pwm3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 27, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sios3n0: sios3n0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 12, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 27, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_27: vpi-27 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 12, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 27, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_spim0_3: spim0-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 12, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 27, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_pwm4: pwm4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 28, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sios5n0: sios5n0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 16, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 28, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_28: vpi-28 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 16, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 28, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_spim0_4: spim0-4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 16, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 28, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_pwm5: pwm5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 29, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_siopwreqn0: siopwreqn0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 20, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 29, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_vpi_29: vpi-29 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 20, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 29, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_spim0_5: spim0-5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 20, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 29, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_pwm6: pwm6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 30, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sioonctrln0: sioonctrln0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 24, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 30, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_spim0_6: spim0-6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 24, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 30, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_pwm7: pwm7 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD22>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x40c, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x480, 31, 1)>;
+	};
+
+	/* SCU1 0x410: Multi-function Pin Control #5 */
+	/omit-if-no-ref/ pin_ncts0: ncts0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x410, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 0, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_siopbon1: siopbon1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x410, 0, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 0, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ndcd0: ndcd0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x410, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 1, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_siopbin1: siopbin1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x410, 4, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 1, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ndsr0: ndsr0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x410, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 2, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sioscin1: sioscin1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x410, 8, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 2, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_nri0: nri0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_V17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x410, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 3, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sios3n1: sios3n1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_V17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x410, 12, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 3, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ndtr0: ndtr0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_J13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x410, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 4, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sios5n1: sios5n1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_J13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x410, 16, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 4, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_nrts0: nrts0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x410, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 5, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_siopwreqn1: siopwreqn1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x410, 20, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 5, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_txd0: txd0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x410, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 6, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_rxd0: rxd0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x410, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 7, 1)>;
+	};
+
+	/* SCU1 0x414: Multi-function Pin Control #6 */
+	/omit-if-no-ref/ pin_ncts1: ncts1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA15>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x414, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 8, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sioonctrln1: sioonctrln1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA15>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x414, 0, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 8, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ndcd1: ndcd1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB15>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x414, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 9, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_siopwrgd1: siopwrgd1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB15>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x414, 4, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 9, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ndsr1: ndsr1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC15>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x414, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 10, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_salt2: salt2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC15>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x414, 8, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 10, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_nri1: nri1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD15>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x414, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 11, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_salt3: salt3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD15>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x414, 12, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 11, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ndtr1: ndtr1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y15>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x414, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 12, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_nrts1: nrts1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x414, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 13, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_txd1: txd1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_W16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x414, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 14, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_rxd1: rxd1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_V16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x414, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 15, 1)>;
+	};
+
+	/* SCU1 0x418: Multi-function Pin Control #7 */
+	/omit-if-no-ref/ pin_txd2: txd2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 16, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_rxd2: rxd2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 17, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_scl12: scl12 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 4, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 17, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_txd3: txd3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_K13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 18, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_wdtrst0n: wdtrst0n {
+		aspeed,ball = <AST27XX_SOC1_BALL_K13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 8, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 18, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_pwm8: pwm8 {
+		aspeed,ball = <AST27XX_SOC1_BALL_K13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 8, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 18, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_spim1_0: spim1-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_K13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 8, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 18, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_rxd3: rxd3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 19, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_wdtrst1n: wdtrst1n {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 12, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 19, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_pwm9: pwm9 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 12, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 19, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sda12: sda12 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 12, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 19, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_spim1_1: spim1-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 12, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 19, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_txd5: txd5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 20, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_wdtrst2n: wdtrst2n {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 16, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 20, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_pwm10: pwm10 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 16, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 20, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_scl13: scl13 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 16, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 20, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_spim1_2: spim1-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 16, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 20, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_rxd5: rxd5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 21, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_wdtrst3n: wdtrst3n {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 20, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 21, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_pwm11: pwm11 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 20, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 21, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sda13: sda13 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 20, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 21, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_spim1_3: spim1-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 20, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 21, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_txd6: txd6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 22, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_salt0: salt0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 24, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 22, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_pwm12: pwm12 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 24, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 22, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_scl14: scl14 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 24, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 22, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_spim1_4: spim1-4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 24, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 22, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_rxd6: rxd6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 23, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_salt1: salt1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 28, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 23, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_pwm13: pwm13 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 28, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 23, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sda14: sda14 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 28, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 23, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_spim1_5: spim1-5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x418, 28, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 23, 1)>;
+	};
+
+	/* SCU1 0x41C: Multi-function Pin Control #8 */
+	/omit-if-no-ref/ pin_txd7: txd7 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x41c, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 24, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_scl15: scl15 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x41c, 0, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 24, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_pwm14: pwm14 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x41c, 0, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 24, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc1_8: lpc1-8 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x41c, 0, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 24, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_spim1_6: spim1-6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x41c, 0, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 24, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_rxd7: rxd7 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x41c, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 25, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sda15: sda15 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x41c, 4, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 25, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_pwm15: pwm15 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x41c, 4, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 25, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc1_9: lpc1-9 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x41c, 4, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 25, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_spim1_7: spim1-7 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x41c, 4, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 25, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sgpm1_2: sgpm1-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x41c, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 26, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_wdtrst7n: wdtrst7n {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x41c, 8, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 26, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_smon1_0: smon1-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x41c, 8, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 26, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sgpm1_3: sgpm1-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_W26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x41c, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 27, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_smon1_1: smon1-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_W26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x41c, 12, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x484, 27, 1)>;
+	};
+
+	/* SCU1 0x420: Multi-function Pin Control #9 */
+	/omit-if-no-ref/ pin_hvi3c12scl: hvi3c12scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_W25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x420, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 0, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 16, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c12scl: di2c12scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_W25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x420, 0, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 0, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 16, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_hvi3c12sda: hvi3c12sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x420, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 1, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 18, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c12sda: di2c12sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x420, 4, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 1, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 18, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_hvi3c13scl: hvi3c13scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x420, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 2, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 20, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c13scl: di2c13scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x420, 8, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 2, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 20, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_hvi3c13sda: hvi3c13sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_W21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x420, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 3, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 22, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c13sda: di2c13sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_W21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x420, 12, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 3, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 22, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_hvi3c14scl: hvi3c14scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x420, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 4, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 24, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c14scl: di2c14scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x420, 16, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 4, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 24, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_hvi3c14sda: hvi3c14sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC22>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x420, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 5, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 26, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c14sda: di2c14sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC22>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x420, 20, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 5, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 26, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_hvi3c15scl: hvi3c15scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB22>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x420, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 6, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 28, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c15scl: di2c15scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB22>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x420, 24, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 6, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 28, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_hvi3c15sda: hvi3c15sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x420, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 7, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 30, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c15sda: di2c15sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x420, 28, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 7, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c0, 30, 2)>;
+	};
+
+	/* SCU1 0x424: Multi-function Pin Control #10 */
+	/omit-if-no-ref/ pin_i3c4scl: i3c4scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x424, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 8, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i3c4sda: i3c4sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF19>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x424, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 9, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 2, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i3c5scl: i3c5scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y22>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x424, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 10, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 4, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i3c5sda: i3c5sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x424, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 11, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 6, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i3c6scl: i3c6scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA22>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x424, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 12, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i3c6sda: i3c6sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x424, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 13, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 10, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i3c7scl: i3c7scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_AF18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x424, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 14, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 12, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i3c7sda: i3c7sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE19>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x424, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 15, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 14, 2)>;
+	};
+
+	/* SCU1 0x428: Multi-function Pin Control #11 */
+	/omit-if-no-ref/ pin_i3c8scl: i3c8scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x428, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 16, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 16, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_fsi0clk: fsi0clk {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x428, 0, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 16, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 16, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i3c8sda: i3c8sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x428, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 17, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 18, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_fsi0dat: fsi0dat {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x428, 4, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 17, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 18, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i3c9scl: i3c9scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x428, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 18, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 20, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_fsi1clk: fsi1clk {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x428, 8, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 18, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 20, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i3c9sda: i3c9sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x428, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 19, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 22, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_fsi1dat: fsi1dat {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x428, 12, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 19, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 22, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i3c10scl: i3c10scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC19>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x428, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 20, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 24, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_fsi2clk: fsi2clk {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC19>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x428, 16, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 20, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 24, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i3c10sda: i3c10sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x428, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 21, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 26, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_fsi2dat: fsi2dat {
+		aspeed,ball = <AST27XX_SOC1_BALL_AE18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x428, 20, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 21, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 26, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i3c11scl: i3c11scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD19>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x428, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 22, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 28, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_fsi3clk: fsi3clk {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD19>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x428, 24, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 22, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 28, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i3c11sda: i3c11sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x428, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 23, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 30, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_fsi3dat: fsi3dat {
+		aspeed,ball = <AST27XX_SOC1_BALL_AD18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x428, 28, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 23, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c4, 30, 2)>;
+	};
+
+	/* SCU1 0x42C: Multi-function Pin Control #12 */
+	/omit-if-no-ref/ pin_hvi3c0scl: hvi3c0scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_U25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x42c, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 24, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c8scl: di2c8scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_U25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x42c, 0, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 24, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_hvi3c0sda: hvi3c0sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_U26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x42c, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 25, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 2, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c8sda: di2c8sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_U26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x42c, 4, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 25, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 2, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_hvi3c1scl: hvi3c1scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x42c, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 26, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 4, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c9scl: di2c9scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x42c, 8, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 26, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 4, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_hvi3c1sda: hvi3c1sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x42c, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 27, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 6, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c9sda: di2c9sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x42c, 12, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 27, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 6, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_hvi3c2scl: hvi3c2scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_R25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x42c, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 28, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c10scl: di2c10scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_R25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x42c, 16, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 28, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_hvi3c2sda: hvi3c2sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x42c, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 29, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 10, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c10sda: di2c10sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x42c, 20, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 29, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 10, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_hvi3c3scl: hvi3c3scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_R26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x42c, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 30, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 12, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c11scl: di2c11scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_R26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x42c, 24, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 30, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 12, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_hvi3c3sda: hvi3c3sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x42c, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 31, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 14, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_di2c11sda: di2c11sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x42c, 28, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x488, 31, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 14, 2)>;
+	};
+
+	/* SCU1 0x430: Multi-function Pin Control #13 */
+	/omit-if-no-ref/ pin_espi0_0: espi0-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x430, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 0, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 16, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc0_2: lpc0-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x430, 0, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 0, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 16, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_espi0_1: espi0-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x430, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 1, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 18, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc0_3: lpc0-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x430, 4, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 1, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 18, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_espi0_2: espi0-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B15>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x430, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 2, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 20, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc0_4: lpc0-4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B15>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x430, 8, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 2, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 20, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_espi0_3: espi0-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x430, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 3, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 22, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc0_5: lpc0-5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x430, 12, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 3, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 22, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_espi0_4: espi0-4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x430, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 4, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 24, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc0_6: lpc0-6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x430, 16, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 4, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 24, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_oscclk: oscclk {
+		aspeed,ball = <AST27XX_SOC1_BALL_C17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x430, 16, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 4, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 24, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_espi0_5: espi0-5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x430, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 5, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 26, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc0_7: lpc0-7 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x430, 20, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 5, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 26, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_espi0_6: espi0-6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_E14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x430, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 6, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 28, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc0_8: lpc0-8 {
+		aspeed,ball = <AST27XX_SOC1_BALL_E14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x430, 24, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 6, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 28, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_espi0_7: espi0-7 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C15>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x430, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 7, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 30, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_lpc0_9: lpc0-9 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C15>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x430, 28, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 7, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4c8, 30, 2)>;
+	};
+
+	/* SCU1 0x434: Multi-function Pin Control #14 */
+	/omit-if-no-ref/ pin_spi0ck: spi0ck {
+		aspeed,ball = <AST27XX_SOC1_BALL_D24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x434, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 8, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi0mosi: spi0mosi {
+		aspeed,ball = <AST27XX_SOC1_BALL_B23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x434, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 9, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 2, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi0miso: spi0miso {
+		aspeed,ball = <AST27XX_SOC1_BALL_B22>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x434, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 10, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 4, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi0dq2: spi0dq2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x434, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 11, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 6, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi0dq3: spi0dq3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x434, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 12, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi0cs1: spi0cs1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x434, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 13, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 10, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi0abr: spi0abr {
+		aspeed,ball = <AST27XX_SOC1_BALL_M15>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x434, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 14, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 12, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_txd8: txd8 {
+		aspeed,ball = <AST27XX_SOC1_BALL_M15>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x434, 24, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 14, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 12, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi0wpn: spi0wpn {
+		aspeed,ball = <AST27XX_SOC1_BALL_B19>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x434, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 15, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 14, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rxd8: rxd8 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B19>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x434, 28, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 15, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 14, 2)>;
+	};
+
+	/* SCU1 0x438: Multi-function Pin Control #15 */
+	/omit-if-no-ref/ pin_spi1ck: spi1ck {
+		aspeed,ball = <AST27XX_SOC1_BALL_B26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x438, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 16, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 16, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_txd9: txd9 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x438, 0, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 16, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 16, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi1mosi: spi1mosi {
+		aspeed,ball = <AST27XX_SOC1_BALL_A25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x438, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 17, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 18, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rxd9: rxd9 {
+		aspeed,ball = <AST27XX_SOC1_BALL_A25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x438, 4, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 17, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 18, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi1miso: spi1miso {
+		aspeed,ball = <AST27XX_SOC1_BALL_A24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x438, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 18, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 20, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_txd10: txd10 {
+		aspeed,ball = <AST27XX_SOC1_BALL_A24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x438, 8, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 18, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 20, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi1dq2: spi1dq2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x438, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 19, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 22, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rxd10: rxd10 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x438, 12, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 19, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 22, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi1dq3: spi1dq3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_E26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x438, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 20, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 24, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_txd11: txd11 {
+		aspeed,ball = <AST27XX_SOC1_BALL_E26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x438, 16, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 20, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 24, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi1cs1: spi1cs1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_A21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x438, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 21, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 26, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rxd11: rxd11 {
+		aspeed,ball = <AST27XX_SOC1_BALL_A21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x438, 20, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 21, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 26, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi1abr: spi1abr {
+		aspeed,ball = <AST27XX_SOC1_BALL_A19>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x438, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 22, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 28, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_thru2_0: thru2-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_A19>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x438, 24, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 22, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 28, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi1wpn: spi1wpn {
+		aspeed,ball = <AST27XX_SOC1_BALL_A18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x438, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 23, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 30, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_thru2_1: thru2-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_A18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x438, 28, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 23, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4cc, 30, 2)>;
+	};
+
+	/* SCU1 0x43C: Multi-function Pin Control #16 */
+	/omit-if-no-ref/ pin_spi2cs0: spi2cs0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x43c, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 24, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d0, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi2ck: spi2ck {
+		aspeed,ball = <AST27XX_SOC1_BALL_C26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x43c, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 25, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d0, 2, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi2mosi: spi2mosi {
+		aspeed,ball = <AST27XX_SOC1_BALL_A23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x43c, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 26, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d0, 4, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi2miso: spi2miso {
+		aspeed,ball = <AST27XX_SOC1_BALL_A22>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x43c, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 27, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d0, 6, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi2dq2: spi2dq2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x43c, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 28, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d0, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_thru3_0: thru3-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x43c, 16, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 28, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d0, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi2dq3: spi2dq3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_F26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x43c, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 29, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d0, 10, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_thru3_1: thru3-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_F26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x43c, 20, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 29, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d0, 10, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_spi2cs1: spi2cs1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_A26>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x43c, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 30, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d0, 12, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_fwspi_abr: fwspi-abr {
+		aspeed,ball = <AST27XX_SOC1_BALL_A14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x43c, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x48c, 31, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d0, 14, 2)>;
+	};
+
+	/* SCU1 0x440: Multi-function Pin Control #17 */
+	/omit-if-no-ref/ pin_mdc2: mdc2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_E10>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x440, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 0, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d0, 16, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_pe2sgrstn_1: pe2sgrstn-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_E10>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x440, 0, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 0, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d0, 16, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_mdio2: mdio2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_E13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x440, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 1, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d0, 18, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_jtagm1_0: jtagm1-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x440, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 2, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d0, 20, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_jtagm1_1: jtagm1-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_F10>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x440, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 3, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d0, 22, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_jtagm1_2: jtagm1-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_E11>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x440, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 4, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d0, 24, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_jtagm1_3: jtagm1-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_F11>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x440, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 5, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d0, 26, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_jtagm1_4: jtagm1-4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_F13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x440, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 6, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d0, 28, 2)>;
+	};
+
+	/* SCU1 0x444: Multi-function Pin Control #18 */
+	/omit-if-no-ref/ pin_rgmii0_0: rgmii0-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x444, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 8, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rmii0_0: rmii0-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x444, 0, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 8, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii0_1: rgmii0-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C19>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x444, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 9, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 2, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii0_2: rgmii0-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_A8>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x444, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 10, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 4, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rmii0_1: rmii0-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_A8>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x444, 8, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 10, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 4, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii0_3: rgmii0-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_R14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x444, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 11, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 6, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rmii0_2: rmii0-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_R14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x444, 12, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 11, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 6, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii0_4: rgmii0-4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_A7>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x444, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 12, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rmii0_3: rmii0-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_A7>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x444, 16, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 12, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii0_5: rgmii0-5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_P14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x444, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 13, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 10, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rmii0_4: rmii0-4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_P14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x444, 20, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 13, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 10, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii0_6: rgmii0-6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x444, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 14, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 12, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rmii0_rclko: rmii0-rclko {
+		aspeed,ball = <AST27XX_SOC1_BALL_D20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x444, 24, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 14, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 12, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii0_7: rgmii0-7 {
+		aspeed,ball = <AST27XX_SOC1_BALL_A6>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x444, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 15, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 14, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rmii0_5: rmii0-5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_A6>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x444, 28, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 15, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 14, 2)>;
+	};
+
+	/* SCU1 0x448: Multi-function Pin Control #19 */
+	/omit-if-no-ref/ pin_rgmii0_8: rgmii0-8 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B6>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x448, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 16, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 16, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rmii0_6: rmii0-6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B6>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x448, 0, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 16, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 16, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii0_9: rgmii0-9 {
+		aspeed,ball = <AST27XX_SOC1_BALL_N14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x448, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 17, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 18, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rmii0_7: rmii0-7 {
+		aspeed,ball = <AST27XX_SOC1_BALL_N14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x448, 4, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 17, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 18, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii0_10: rgmii0-10 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B7>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x448, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 18, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 20, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii0_11: rgmii0-11 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B8>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x448, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 19, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 22, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_mdc0: mdc0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B9>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x448, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 20, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 24, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_mdio0: mdio0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_M14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x448, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 21, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 26, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_vga_hs: vga-hs {
+		aspeed,ball = <AST27XX_SOC1_BALL_J11>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x448, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 22, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 28, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_vga_vs: vga-vs {
+		aspeed,ball = <AST27XX_SOC1_BALL_E7>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x448, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 23, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d4, 30, 2)>;
+	};
+
+	/* SCU1 0x44C: Multi-function Pin Control #20 */
+	/omit-if-no-ref/ pin_rgmii1_0: rgmii1-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D19>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 24, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rmii1_0: rmii1-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D19>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 0, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 24, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_dsgpm0_0: dsgpm0-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D19>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 0, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 24, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii1_1: rgmii1-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B11>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 25, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 2, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_sgps_0: sgps-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B11>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 4, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 25, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 2, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii1_2: rgmii1-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D15>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 26, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 4, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rmii1_1: rmii1-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D15>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 8, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 26, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 4, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii1_3: rgmii1-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 27, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 6, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rmii1_2: rmii1-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 12, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 27, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 6, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii1_4: rgmii1-4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B10>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 28, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rmii1_3: rmii1-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B10>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 16, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 28, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_dsgpm0_1: dsgpm0-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_B10>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 16, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 28, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii1_5: rgmii1-5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_P13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 29, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 10, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rmii1_4: rmii1-4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_P13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 20, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 29, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 10, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii1_6: rgmii1-6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 30, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 12, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rmii1_rclko: rmii1-rclko {
+		aspeed,ball = <AST27XX_SOC1_BALL_C18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 24, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 30, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 12, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_sgps_1: sgps-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 24, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 30, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 12, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii1_7: rgmii1-7 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C6>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 31, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 14, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rmii1_5: rmii1-5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C6>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x44c, 28, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x490, 31, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 14, 2)>;
+	};
+
+	/* SCU1 0x450: Multi-function Pin Control #21 */
+	/omit-if-no-ref/ pin_rgmii1_8: rgmii1-8 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C7>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x450, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 0, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 16, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rmii1_6: rmii1-6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C7>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x450, 0, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 0, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 16, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_dsgpm0_2: dsgpm0-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C7>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x450, 0, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 0, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 16, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii1_9: rgmii1-9 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D7>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x450, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 1, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 18, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rmii1_7: rmii1-7 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D7>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x450, 4, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 1, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 18, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_dsgpm0_3: dsgpm0-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D7>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x450, 4, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 1, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 18, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii1_10: rgmii1-10 {
+		aspeed,ball = <AST27XX_SOC1_BALL_N13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x450, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 2, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 20, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_sgps_2: sgps-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_N13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x450, 8, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 2, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 20, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_rgmii1_11: rgmii1-11 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C8>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x450, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 3, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 22, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_sgps_3: sgps-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C8>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x450, 12, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 3, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 22, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_mdc1: mdc1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C9>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x450, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 4, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 24, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_mdio1: mdio1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C10>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x450, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 5, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4d8, 26, 2)>;
+	};
+
+	/*
+	 * M16 and A15 also have a drive-strength field at SCU1 0x4D8. With the
+	 * FWSPI function selected, the FMC drive-strength field at SCU1 0x4E0
+	 * applies to them, as it does to the dedicated FMC balls.
+	 */
+	/omit-if-no-ref/ pin_fwspidq2: fwspidq2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_M16>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x450, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 6, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4e0, 12, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_fwspidq3: fwspidq3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_A15>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x450, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 7, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4e0, 14, 2)>;
+	};
+
+	/* SCU1 0x454: Multi-function Pin Control #22 */
+	/omit-if-no-ref/ pin_scl0: scl0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_G11>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x454, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 8, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ltpi_ps_i2c0scl: ltpi-ps-i2c0scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_G11>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x454, 0, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 8, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sda0: sda0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_H7>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x454, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 9, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ltpi_ps_i2c0sda: ltpi-ps-i2c0sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_H7>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x454, 4, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 9, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_scl1: scl1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_H8>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x454, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 10, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ltpi_ps_i2c1scl: ltpi-ps-i2c1scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_H8>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x454, 8, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 10, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sda1: sda1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_H9>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x454, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 11, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ltpi_ps_i2c1sda: ltpi-ps-i2c1sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_H9>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x454, 12, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 11, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_scl2: scl2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_H10>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x454, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 12, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ltpi_ps_i2c2scl: ltpi-ps-i2c2scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_H10>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x454, 16, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 12, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sda2: sda2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_H11>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x454, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 13, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ltpi_ps_i2c2sda: ltpi-ps-i2c2sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_H11>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x454, 20, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 13, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_scl3: scl3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_J9>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x454, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 14, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ltpi_ps_i2c3scl: ltpi-ps-i2c3scl {
+		aspeed,ball = <AST27XX_SOC1_BALL_J9>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x454, 24, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 14, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sda3: sda3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_J10>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x454, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 15, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ltpi_ps_i2c3sda: ltpi-ps-i2c3sda {
+		aspeed,ball = <AST27XX_SOC1_BALL_J10>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x454, 28, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 15, 1)>;
+	};
+
+	/* SCU1 0x458: Multi-function Pin Control #23 */
+	/omit-if-no-ref/ pin_scl4: scl4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_E9>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x458, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 16, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4dc, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i2cf1_0: i2cf1-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_E9>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x458, 0, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 16, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4dc, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_sda4: sda4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_F9>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x458, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 17, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4dc, 2, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i2cf1_1: i2cf1-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_F9>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x458, 4, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 17, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4dc, 2, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_scl5: scl5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_F8>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x458, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 18, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4dc, 4, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i2cf1_2: i2cf1-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_F8>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x458, 8, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 18, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4dc, 4, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_sda5: sda5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_M13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x458, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 19, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4dc, 6, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i2cf1_3: i2cf1-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_M13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x458, 12, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 19, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4dc, 6, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_scl6: scl6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_F7>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x458, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 20, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4dc, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i2cf2_0: i2cf2-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_F7>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x458, 16, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 20, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4dc, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_sda6: sda6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D8>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x458, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 21, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4dc, 10, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i2cf2_1: i2cf2-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_D8>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x458, 20, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 21, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4dc, 10, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_scl7: scl7 {
+		aspeed,ball = <AST27XX_SOC1_BALL_E8>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x458, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 22, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4dc, 12, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i2cf2_2: i2cf2-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_E8>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x458, 24, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 22, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4dc, 12, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_sda7: sda7 {
+		aspeed,ball = <AST27XX_SOC1_BALL_L12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x458, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 23, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4dc, 14, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_i2cf2_3: i2cf2-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_L12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x458, 28, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 23, 1)>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4dc, 14, 2)>;
+	};
+
+	/* SCU1 0x45C: Multi-function Pin Control #24 */
+	/omit-if-no-ref/ pin_scl8: scl8 {
+		aspeed,ball = <AST27XX_SOC1_BALL_F12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x45c, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 24, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_i2cf0_0: i2cf0-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_F12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x45c, 0, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 24, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sda8: sda8 {
+		aspeed,ball = <AST27XX_SOC1_BALL_E12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x45c, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 25, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_i2cf0_1: i2cf0-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_E12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x45c, 4, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 25, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_scl9: scl9 {
+		aspeed,ball = <AST27XX_SOC1_BALL_J12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x45c, 8, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 26, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_i2cf0_2: i2cf0-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_J12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x45c, 8, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 26, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sda9: sda9 {
+		aspeed,ball = <AST27XX_SOC1_BALL_G7>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x45c, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 27, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_canbus_stby: canbus-stby {
+		aspeed,ball = <AST27XX_SOC1_BALL_G7>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x45c, 12, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 27, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_i2cf0_3: i2cf0-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_G7>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x45c, 12, 5)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 27, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_scl10: scl10 {
+		aspeed,ball = <AST27XX_SOC1_BALL_G8>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x45c, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 28, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_canbus_tx: canbus-tx {
+		aspeed,ball = <AST27XX_SOC1_BALL_G8>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x45c, 16, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 28, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sda10: sda10 {
+		aspeed,ball = <AST27XX_SOC1_BALL_G9>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x45c, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 29, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_canbus_rx: canbus-rx {
+		aspeed,ball = <AST27XX_SOC1_BALL_G9>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x45c, 20, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 29, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_scl11: scl11 {
+		aspeed,ball = <AST27XX_SOC1_BALL_G10>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x45c, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 30, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_usbuart_d_p: usbuart-d-p {
+		aspeed,ball = <AST27XX_SOC1_BALL_G10>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x45c, 24, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 30, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sda11: sda11 {
+		aspeed,ball = <AST27XX_SOC1_BALL_K12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x45c, 28, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 31, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_usbuart_d_n: usbuart-d-n {
+		aspeed,ball = <AST27XX_SOC1_BALL_K12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x45c, 28, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x494, 31, 1)>;
+	};
+
+	/* SCU1 0x460: Multi-function Pin Control #25 */
+	/omit-if-no-ref/ pin_adc0: adc0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_W17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x460, 0, 0)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 0, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_salt4: salt4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_W17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x460, 0, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 0, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_adc1: adc1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_V18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x460, 4, 0)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 1, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_salt5: salt5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_V18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x460, 4, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 1, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_adc2: adc2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_W18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x460, 8, 0)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 2, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_salt6: salt6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_W18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x460, 8, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 2, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_adc3: adc3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x460, 12, 0)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 3, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_salt7: salt7 {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y17>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x460, 12, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 3, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_adc4: adc4 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x460, 16, 0)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 4, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_salt8: salt8 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x460, 16, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 4, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_adc5: adc5 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x460, 20, 0)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 5, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_salt9: salt9 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA13>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x460, 20, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 5, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_adc6: adc6 {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x460, 24, 0)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 6, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_salt10: salt10 {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y18>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x460, 24, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 6, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_adc7: adc7 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x460, 28, 0)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 7, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_salt11: salt11 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AA12>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x460, 28, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 7, 1)>;
+	};
+
+	/* SCU1 0x464: Multi-function Pin Control #26 */
+	/omit-if-no-ref/ pin_adc8: adc8 {
+		aspeed,ball = <AST27XX_SOC1_BALL_W20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x464, 0, 0)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 8, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_adc9: adc9 {
+		aspeed,ball = <AST27XX_SOC1_BALL_V20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x464, 4, 0)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 9, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_adc10: adc10 {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y11>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x464, 8, 0)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 10, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_adc11: adc11 {
+		aspeed,ball = <AST27XX_SOC1_BALL_V14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x464, 12, 0)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 11, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_adc12: adc12 {
+		aspeed,ball = <AST27XX_SOC1_BALL_V19>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x464, 16, 0)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 12, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_adc13: adc13 {
+		aspeed,ball = <AST27XX_SOC1_BALL_W14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x464, 20, 0)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 13, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_auxpwrgood0: auxpwrgood0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_W14>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x464, 20, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 13, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_adc14: adc14 {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x464, 24, 0)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 14, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_auxpwrgood1: auxpwrgood1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_Y20>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x464, 24, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 14, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_adc15: adc15 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB19>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x464, 28, 0)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 15, 1)>;
+	};
+
+	/* SCU1 0x468: Multi-function Pin Control #27 */
+	/omit-if-no-ref/ pin_sgpm0_0: sgpm0-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_U21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 0, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 16, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_smon0_0: smon0-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_U21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 0, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 16, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ncts2: ncts2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_U21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 0, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 16, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_maclink0: maclink0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_U21>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 0, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 16, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sgpm0_1: sgpm0-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_T24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 4, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 17, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_smon0_1: smon0-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_T24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 4, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 17, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ndcd2: ndcd2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_T24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 4, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 17, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_maclink2: maclink2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_T24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 4, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 17, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_hbled: hbled {
+		aspeed,ball = <AST27XX_SOC1_BALL_V24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 8, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 18, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sgpm0_2: sgpm0-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_V22>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 12, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 19, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_smon0_2: smon0-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_V22>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 12, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 19, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ndsr2: ndsr2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_V22>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 12, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 19, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sgpm0_3: sgpm0-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_T23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 16, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 20, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_smon0_3: smon0-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_T23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 16, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 20, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_nri2: nri2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_T23>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 16, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 20, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sgpm1_0: sgpm1-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 20, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 21, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_wdtrst4n: wdtrst4n {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 20, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 21, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_ndtr2: ndtr2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 20, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 21, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_smon1_2: smon1-2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 20, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 21, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_sgpm1_1: sgpm1-1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 24, 1)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 22, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_wdtrst5n: wdtrst5n {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 24, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 22, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_nrts2: nrts2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 24, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 22, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_smon1_3: smon1-3 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AB25>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 24, 4)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 22, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_wdtrst6n: wdtrst6n {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 28, 2)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 23, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_maclink1: maclink1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_AC24>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x468, 28, 3)>;
+		aspeed,bias-disable-field = <ASPEED_G7_PINCFG(0x498, 23, 1)>;
+	};
+
+	/* SCU1 0x47C: SGMII Pin Control */
+	/omit-if-no-ref/ pin_sgmii: sgmii {
+		aspeed,ball = <AST27XX_SOC1_BALL_SGMII0>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x47c, 0, 1)>;
+	};
+
+	/* SCU1 0x908: PCIe RC PERST Pin Control */
+	/omit-if-no-ref/ pin_pe2sgrstn_0: pe2sgrstn-0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_PCIERC2_PERST>;
+		aspeed,mux = <ASPEED_G7_PINMUX(0x908, 1, 1)>;
+	};
+
+	/omit-if-no-ref/ pin_fwspics0: fwspics0 {
+		aspeed,ball = <AST27XX_SOC1_BALL_C25>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4e0, 0, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_fwspics1: fwspics1 {
+		aspeed,ball = <AST27XX_SOC1_BALL_A13>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4e0, 2, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_fwspics2: fwspics2 {
+		aspeed,ball = <AST27XX_SOC1_BALL_A12>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4e0, 4, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_fwspiclk: fwspiclk {
+		aspeed,ball = <AST27XX_SOC1_BALL_C24>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4e0, 6, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_fwspimosi: fwspimosi {
+		aspeed,ball = <AST27XX_SOC1_BALL_A17>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4e0, 8, 2)>;
+	};
+
+	/omit-if-no-ref/ pin_fwspimiso: fwspimiso {
+		aspeed,ball = <AST27XX_SOC1_BALL_A16>;
+		aspeed,drive-strength-field = <ASPEED_G7_PINCFG(0x4e0, 10, 2)>;
+	};
+};
