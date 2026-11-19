@@ -12,4 +12,12 @@
 		xlnx,wdt-interval = <31>;
 		xlnx,wdt-enable-once = <1>;
 	};
+
+	aspeed_wdt: watchdog@88889000 {
+		compatible = "aspeed,ast2700-wdt";
+		reg = <0x88889000 0x80>;
+		interrupt-parent = <&nvic>;
+		interrupts = <20 0>;
+		aspeed,reset-mask = <0xffffffff>;
+	};
 };

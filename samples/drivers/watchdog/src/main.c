@@ -56,6 +56,9 @@
 #define WDT_ALLOW_CALLBACK 0
 #define WDT_MAX_WINDOW     2000U
 #define WDT_OPT            0
+#elif DT_HAS_COMPAT_STATUS_OKAY(aspeed_ast2700_wdt)
+#define WDT_ALLOW_CALLBACK 0
+#define WDT_OPT            0
 #elif DT_HAS_COMPAT_STATUS_OKAY(andestech_atcwdt200)
 #define WDT_MAX_WINDOW 500U
 #elif DT_HAS_COMPAT_STATUS_OKAY(ti_mspm0_watchdog)

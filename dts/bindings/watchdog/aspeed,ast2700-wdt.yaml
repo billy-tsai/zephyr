@@ -1,0 +1,34 @@
+# Copyright (c) 2026 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  ASPEED AST2700 watchdog timer.
+
+  A timeout with WDT_FLAG_RESET_CPU_CORE resets the SoC blocks selected by
+  the reset mask registers. WDT_FLAG_RESET_SOC resets the full chip; the
+  driver then clears the SCU bits that block the watchdog's full-chip reset,
+  in the SCUs given by aspeed,scu0 and aspeed,scu1. Timeout callbacks need
+  the interrupt.
+
+compatible: "aspeed,ast2700-wdt"
+
+include: base.yaml
+
+properties:
+  reg:
+    required: true
+
+  aspeed,reset-mask:
+    type: array
+    description: |
+      Values of the reset mask registers, at most 5, in register order.
+      Written to the reset masks and the software reset masks at init.
+      Without it, the masks are left as the boot firmware set them.
+
+  aspeed,scu0:
+    type: phandle
+    description: SCU0 syscon, for the full-chip reset gate in SCU0 0xC8 bit 9.
+
+  aspeed,scu1:
+    type: phandle
+    description: SCU1 syscon, for the full-chip reset gate in SCU1 0xC8 bit 7.

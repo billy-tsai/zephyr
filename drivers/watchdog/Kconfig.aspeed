@@ -1,0 +1,13 @@
+# Copyright (c) 2026 ASPEED Technology Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+config WDT_ASPEED
+	bool "ASPEED watchdog driver"
+	default y
+	depends on DT_HAS_ASPEED_AST2700_WDT_ENABLED
+	select SYSCON
+	select HAS_WDT_DISABLE_AT_BOOT
+	select HAS_WDT_NO_CALLBACKS if !$(dt_compat_any_has_prop,$(DT_COMPAT_ASPEED_AST2700_WDT),interrupts)
+	help
+	  Enable the watchdog driver for ASPEED SoCs. Timeout callbacks need
+	  the watchdog interrupt in the devicetree.

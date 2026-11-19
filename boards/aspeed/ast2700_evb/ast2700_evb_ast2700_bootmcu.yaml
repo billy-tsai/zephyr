@@ -10,4 +10,5 @@ toolchain:
 ram: 244
 supported:
   - serial
+  - watchdog
 vendor: aspeed
