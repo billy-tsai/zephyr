@@ -10,8 +10,12 @@ configdefault NUM_IRQS
 configdefault CLOCK_CONTROL
 	default y
 
-# The SCU1 clock controller accesses its registers through the parent syscon device.
+# The SCU clock and reset controllers access their registers through the parent
+# syscon devices.
 configdefault CLOCK_CONTROL_INIT_PRIORITY
+	default SYSCON_INIT_PRIORITY
+
+configdefault RESET_INIT_PRIORITY
 	default SYSCON_INIT_PRIORITY
 
 endif # SOC_AST2700_BOOTMCU
