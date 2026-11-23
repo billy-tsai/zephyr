@@ -9,10 +9,14 @@ toolchain:
 ram: 32
 flash: 128
 supported:
+  - adc
   - uart
   - gpio
   - can
+  - counter
   - dac
+  - hwinfo
+  - pwm
   - spi
   - vref
   - trng

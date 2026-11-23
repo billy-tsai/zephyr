@@ -13,6 +13,13 @@ tests:
   drivers.spi.loopback: {}
   drivers.spi.loopback.internal:
     filter: CONFIG_SPI_LOOPBACK_MODE_LOOP
+  drivers.spi.loopback.deinit_busy:
+    platform_allow:
+      - kit_pse84_eval/pse846gps2dbzc4a/m33
+      - kit_pse84_eval/pse846gps2dbzc4a/m33/ns
+      - kit_pse84_eval/pse846gps2dbzc4a/m55
+    extra_configs:
+      - CONFIG_SPI_LOOPBACK_TEST_BUSY_DEINIT=y
   drivers.spi.loopback.lpspi.dma:
     filter: DT_HAS_NXP_LPSPI_ENABLED and DT_HAS_NXP_MCUX_EDMA_ENABLED
     extra_configs:
@@ -51,6 +58,7 @@ tests:
       - esp32h2_devkitm
       - esp32p4x_function_ev_board/esp32p4/hpcore
       - esp8684_devkitm
+      - pic32cm_jh01_cpro
     integration_platforms:
       - robokit1
   drivers.spi.mcux_dspi_dma.loopback:
@@ -76,6 +84,7 @@ tests:
       - pic32cx_sg41_cult
       - pic32cm_gc00_cpro
       - pic32cz_ca80_cult
+      - pic32cm_jh01_cpro
   drivers.spi.stm32_spi_dma.loopback:
     extra_args: EXTRA_CONF_FILE="overlay-stm32-spi-dma.conf"
     platform_allow:
@@ -96,12 +105,30 @@ tests:
       - nucleo_h753zi
       - nucleo_h745zi_q/stm32h745xx/m4
       - nucleo_h745zi_q/stm32h745xx/m7
+      - nucleo_u083rc
       - nucleo_u385rg_q
       - stm32h573i_dk
       - stm32n6570_dk/stm32n657xx/sb
       - stm32u083c_dk
     integration_platforms:
       - nucleo_g474re
+  drivers.spi.stm32_spi_dma_cached_memory.loopback:
+    extra_args: EXTRA_CONF_FILE="stm32-spi-dma-cached-memory.conf"
+    platform_allow:
+      - b_u585i_iot02a
+      - nucleo_u575zi_q
+    integration_platforms:
+      - b_u585i_iot02a
+  drivers.spi.stm32_spi_dma_cached_memory_polling.loopback:
+    extra_args: EXTRA_CONF_FILE="stm32-spi-dma-cached-memory-polling.conf"
+    platform_allow:
+      - b_u585i_iot02a
+      - nucleo_u575zi_q
+  drivers.spi.stm32_spi_dma_cached_memory_auto_suspend.loopback:
+    extra_args: EXTRA_CONF_FILE="stm32-spi-dma-cached-memory-auto-suspend.conf"
+    platform_allow:
+      - b_u585i_iot02a
+      - nucleo_u575zi_q
   drivers.spi.stm32_spi_dma_dt_nocache_mem.loopback:
     # this test case is for when nocache memory region is defined in DT
     # using `zephyr,memory-attr = < DT_MEM_ARM_MPU_RAM_NOCACHE)>`
@@ -132,6 +159,7 @@ tests:
       - nucleo_h745zi_q/stm32h745xx/m4
       - nucleo_h745zi_q/stm32h745xx/m7
       - nucleo_l152re
+      - nucleo_u083rc
       - nucleo_u385rg_q
       - nucleo_wba55cg
       - nucleo_wb55rg
@@ -159,6 +187,7 @@ tests:
       - nucleo_h745zi_q/stm32h745xx/m4
       - nucleo_h745zi_q/stm32h745xx/m7
       - nucleo_l152re
+      - nucleo_u083rc
       - nucleo_wba55cg
       - nucleo_wb55rg
       - nucleo_wl55jc
@@ -184,6 +213,7 @@ tests:
       - nucleo_h745zi_q/stm32h745xx/m4
       - nucleo_h745zi_q/stm32h745xx/m7
       - nucleo_l152re
+      - nucleo_u083rc
       - nucleo_wba55cg
       - nucleo_wb55rg
       - nucleo_wl55jc
@@ -289,6 +319,7 @@ tests:
       - platform:mimxrt1040_evk:DTC_OVERLAY_FILE="boards/mimxrt1040_evk_flexio_spi.overlay"
       - platform:frdm_imxrt1186/mimxrt1186/cm33:DTC_OVERLAY_FILE="boards/frdm_imxrt1186_flexio_spi.overlay"
       - platform:frdm_imxrt1186/mimxrt1186/cm7:DTC_OVERLAY_FILE="boards/frdm_imxrt1186_flexio_spi.overlay"
+      - platform:frdm_imxrt1152/mimxrt1152:DTC_OVERLAY_FILE="boards/frdm_imxrt1152_flexio_spi.overlay"
       - platform:frdm_mcxe31b/mcxe31b:DTC_OVERLAY_FILE="boards/frdm_mcxe31b_flexio_spi.overlay"
     filter: CONFIG_DT_HAS_NXP_FLEXIO_ENABLED and
             CONFIG_DT_HAS_NXP_FLEXIO_SPI_ENABLED
@@ -301,6 +332,7 @@ tests:
       - mimxrt1040_evk
       - frdm_imxrt1186/mimxrt1186/cm33
       - frdm_imxrt1186/mimxrt1186/cm7
+      - frdm_imxrt1152/mimxrt1152
       - frdm_mcxe31b
   drivers.spi.nrf54h_fast_2mhz:
     extra_args:

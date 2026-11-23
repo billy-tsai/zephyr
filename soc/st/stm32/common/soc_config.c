@@ -73,6 +73,7 @@ static int st_stm32_common_config(void)
 #if defined(CONFIG_SOC_SERIES_STM32C5X) || \
 	defined(CONFIG_SOC_SERIES_STM32F1X) || \
 	defined(CONFIG_SOC_SERIES_STM32F4X) || \
+	defined(CONFIG_SOC_SERIES_STM32H7PX) || \
 	defined(CONFIG_SOC_SERIES_STM32L1X)
 	LL_DBGMCU_EnableDBGSleepMode();
 	LL_DBGMCU_EnableDBGStopMode();
@@ -89,6 +90,9 @@ static int st_stm32_common_config(void)
 	LL_DBGMCU_EnableDBGStandbyMode();
 #elif defined(CONFIG_SOC_SERIES_STM32MP13X)
 	LL_DBGMCU_EnableDebugInLowPowerMode();
+#elif defined(CONFIG_SOC_SERIES_STM32U5X)
+	LL_DBGMCU_EnableDBGStopMode();
+	LL_DBGMCU_EnableDBGStandbyMode();
 #else /* all other parts */
 	LL_DBGMCU_EnableDBGStopMode();
 #endif
@@ -99,6 +103,7 @@ static int st_stm32_common_config(void)
 #if defined(CONFIG_SOC_SERIES_STM32C5X) || \
 	defined(CONFIG_SOC_SERIES_STM32F1X) || \
 	defined(CONFIG_SOC_SERIES_STM32F4X) || \
+	defined(CONFIG_SOC_SERIES_STM32H7PX) || \
 	defined(CONFIG_SOC_SERIES_STM32L1X)
 	LL_DBGMCU_DisableDBGSleepMode();
 	LL_DBGMCU_DisableDBGStopMode();
@@ -115,6 +120,9 @@ static int st_stm32_common_config(void)
 	LL_DBGMCU_DisableDBGStandbyMode();
 #elif defined(CONFIG_SOC_SERIES_STM32MP13X)
 	LL_DBGMCU_DisableDebugInLowPowerMode();
+#elif defined(CONFIG_SOC_SERIES_STM32U5X)
+	LL_DBGMCU_DisableDBGStopMode();
+	LL_DBGMCU_DisableDBGStandbyMode();
 #else /* all other parts */
 	LL_DBGMCU_DisableDBGStopMode();
 #endif

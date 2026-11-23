@@ -1317,7 +1317,7 @@ ZTEST(mem_protect_kobj, test_kobj_create_out_of_memory)
 {
 	int ttype;
 	int max_obj = 0;
-	void *create_obj[MAX_OBJ] = {0};
+	static void *create_obj[MAX_OBJ];
 
 	for (ttype = K_OBJ_MEM_SLAB; ttype < K_OBJ_CONDVAR ; ttype++) {
 
@@ -1467,10 +1467,13 @@ ZTEST(mem_protect_kobj, test_alloc_kobjects)
 	ko = k_object_alloc(K_OBJ_LAST);
 	zassert_is_null(ko, "alloc obj (0x%lx)\n", (uintptr_t)ko);
 
-	/* alloc possible device driver */
-	ko = k_object_alloc(K_OBJ_LAST-1);
-	zassert_not_null(ko, "alloc obj (0x%lx)\n", (uintptr_t)ko);
-	k_object_release((void *)ko);
+	/* driver objects are static devices and cannot be allocated */
+	ko = k_object_alloc(K_OBJ_DRIVER_ANY);
+	zassert_is_null(ko, "alloc obj (0x%lx)\n", (uintptr_t)ko);
+	for (int otype = K_OBJ_DRIVER_FIRST; otype <= K_OBJ_DRIVER_LAST; otype++) {
+		ko = k_object_alloc(otype);
+		zassert_is_null(ko, "alloc obj type %d (0x%lx)\n", otype, (uintptr_t)ko);
+	}
 }
 
 /* static kobject for permission testing */

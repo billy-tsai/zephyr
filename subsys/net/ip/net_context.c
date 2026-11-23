@@ -1488,6 +1488,15 @@ static bool tcp_iface_from_peer(struct net_context *context)
 	return false;
 }
 
+/* With the addresses checked, check_ip() turns packets to the host itself
+ * around before they reach L2, so they need no next hop.
+ */
+static bool ipv4_dst_is_turned_around(const struct net_in_addr *dst)
+{
+	return IS_ENABLED(CONFIG_NET_IP_ADDR_CHECK) &&
+	       (net_ipv4_is_addr_loopback(dst) || net_ipv4_is_my_addr(dst));
+}
+
 int net_context_connect(struct net_context *context,
 			const struct net_sockaddr *addr,
 			net_socklen_t addrlen,
@@ -1628,6 +1637,8 @@ int net_context_connect(struct net_context *context,
 		struct net_sockaddr_in *addr4 = (struct net_sockaddr_in *)
 							&context->remote;
 		struct net_if *iface = net_context_get_iface(context);
+		struct net_sockaddr_in remote_before = *addr4;
+		uint16_t flags_before = context->flags;
 		bool iface_from_peer;
 
 		if (addrlen < sizeof(struct net_sockaddr_in)) {
@@ -1683,6 +1694,31 @@ int net_context_connect(struct net_context *context,
 				       &net_sin(&context->local)->sin_addr);
 
 			laddr = local_addr;
+		}
+
+		/* Fail now rather than send packets that L2 would drop. The
+		 * peer the context had before stays, as no new one was set.
+		 */
+		iface = net_context_get_iface(context);
+		if (addr4->sin_addr.s_addr != NET_INADDR_ANY && iface != NULL &&
+		    !net_if_is_ip_offloaded(iface) &&
+		    !ipv4_dst_is_turned_around(&addr4->sin_addr)) {
+			const struct net_in_addr *src;
+
+			if (laddr != NULL &&
+			    !net_ipv4_is_addr_unspecified(&net_sin(laddr)->sin_addr)) {
+				src = &net_sin(laddr)->sin_addr;
+			} else {
+				src = net_if_ipv4_select_src_addr(iface, &addr4->sin_addr);
+			}
+
+			if (!net_ipv4_has_next_hop(iface, src, &addr4->sin_addr)) {
+				*addr4 = remote_before;
+				context->flags = (context->flags & ~NET_CONTEXT_REMOTE_ADDR_SET) |
+						 (flags_before & NET_CONTEXT_REMOTE_ADDR_SET);
+				ret = -ENETUNREACH;
+				goto unlock;
+			}
 		}
 	} else {
 		ret = -EINVAL; /* Not IPv4 or IPv6 */
@@ -3356,8 +3392,16 @@ static int context_sendto(struct net_context *context,
 #endif /* CONFIG_NET_UDP_OPTIONS */
 
 	iface = net_context_get_iface(context);
-	if (iface && !net_if_is_up(iface)) {
-		return -ENETDOWN;
+	if (iface != NULL) {
+		/* Packet sockets can send before the link is operational. */
+		bool up = (family == NET_AF_PACKET) ?
+			  (net_if_is_admin_up(iface) && net_if_is_carrier_ok(iface) &&
+			   !net_if_flag_is_set(iface, NET_IF_SUSPENDED)) :
+			  net_if_is_up(iface);
+
+		if (!up) {
+			return -ENETDOWN;
+		}
 	}
 
 	context->send_cb = cb;
@@ -4104,7 +4148,13 @@ enum net_verdict net_context_packet_received(struct net_conn *conn,
 	net_context_recv_cb_t recv_cb;
 	enum net_verdict verdict = NET_DROP;
 
-	NET_ASSERT(context);
+	/* The connection is unregistered if the context was released after
+	 * the connection layer selected it.
+	 */
+	if (context == NULL) {
+		return NET_DROP;
+	}
+
 	NET_ASSERT(net_pkt_iface(pkt));
 
 	k_mutex_lock(&context->lock, K_FOREVER);
@@ -4251,22 +4301,30 @@ static enum net_verdict net_context_raw_packet_received(
 					void *user_data)
 {
 	struct net_context *context = find_context(conn);
+	net_context_recv_cb_t recv_cb;
 
-	NET_ASSERT(context);
+	/* The connection is unregistered if the context was released after
+	 * the connection layer selected it.
+	 */
+	if (context == NULL) {
+		return NET_DROP;
+	}
+
 	NET_ASSERT(net_pkt_iface(pkt));
 
 	/* If there is no callback registered, then we can only drop
-	 * the packet.
+	 * the packet. Read the callback once, as close() can clear it
+	 * concurrently.
 	 */
-
-	if (!context->recv_cb) {
+	recv_cb = context->recv_cb;
+	if (recv_cb == NULL) {
 		return NET_DROP;
 	}
 
 	net_context_set_iface(context, net_pkt_iface(pkt));
 	net_pkt_set_context(pkt, context);
 
-	context->recv_cb(context, pkt, ip_hdr, proto_hdr, 0, user_data);
+	recv_cb(context, pkt, ip_hdr, proto_hdr, 0, user_data);
 
 #if defined(CONFIG_NET_CONTEXT_SYNC_RECV)
 	k_sem_give(&context->recv_data_wait);

@@ -88,6 +88,12 @@
 	status = "okay";
 };
 
+/* Arduino D0 (RX, GPIO_AD_03) and D1 (TX, GPIO_AD_02) on J10 */
+arduino_serial: &lpuart8 {
+	pinctrl-0 = <&pinmux_lpuart8>;
+	pinctrl-names = "default";
+};
+
 &green_led {
 	status = "okay";
 };
@@ -99,10 +105,10 @@
  * SAI1_RX_DATA00 is routed to a pad.
  */
 &lpi2c4 {
-	status = "okay";
 	pinctrl-0 = <&pinmux_lpi2c4>;
 	pinctrl-names = "default";
 	clock-frequency = <I2C_BITRATE_STANDARD>;
+	status = "okay";
 
 	audio_codec: wm8962@1a {
 		compatible = "wolfson,wm8962";
@@ -114,12 +120,12 @@
 };
 
 i2s_rx: &sai1 {
-	status = "okay";
 	pinctrl-0 = <&pinmux_sai1>;
 	pinctrl-names = "default";
 	mclk-output;
-	nxp,rx-sync-mode;
 	podf = <32>;
+	nxp,rx-sync-mode;
+	status = "okay";
 };
 
 i2s_tx: &sai1 {};
@@ -173,6 +179,49 @@ i2s_tx: &sai1 {};
 };
 
 &systick {
+	status = "okay";
+};
+
+&edma0 {
+	status = "okay";
+};
+
+/*
+ * LPI2C1 is on the Arduino header A4 (SDA, GPIO_AD_09) / A5 (SCL,
+ * GPIO_AD_08) of J47 and also reaches the PTN5150A Type-C controller.
+ */
+arduino_i2c: &lpi2c1 {
+	pinctrl-0 = <&pinmux_lpi2c1>;
+	pinctrl-names = "default";
+	status = "okay";
+};
+
+/* LPI2C4 serves the PCAL6524 I/O expander and the WM8962 codec */
+&lpi2c4 {
+	pinctrl-0 = <&pinmux_lpi2c4>;
+	pinctrl-names = "default";
+	status = "okay";
+
+	gpio_exp0: pcal6524@22 {
+		compatible = "nxp,pcal6524";
+		reg = <0x22>;
+		gpio-controller;
+		#gpio-cells = <2>;
+		ngpios = <24>;
+		int-gpios = <&gpio3 26 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+	};
+};
+
+/*
+ * LPSPI1 is on the Arduino header D10-D13 (J11) and the mikroBUS socket
+ * (J12). The Wi-Fi module taps the same pads only through solder jumpers
+ * that ship open.
+ */
+arduino_spi: &lpspi1 {
+	pinctrl-0 = <&pinmux_lpspi1>;
+	pinctrl-names = "default";
+	dmas = <&edma0 0 36>, <&edma0 1 37>;
+	dma-names = "rx", "tx";
 	status = "okay";
 };
 

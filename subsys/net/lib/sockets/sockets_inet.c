@@ -274,6 +274,16 @@ static void zsock_received_cb(struct net_context *ctx,
 		(void)k_mutex_lock(ctx->cond.lock, K_FOREVER);
 	}
 
+	if (!net_context_is_used(ctx)) {
+		/* close() released the context while this waited for the
+		 * descriptor lock, after it flushed the queue.
+		 */
+		NET_DBG("%sctx=%p, pkt=%p, st=%d, user_data=%p",
+			"DROP: ", ctx, pkt, status, user_data);
+		net_pkt_unref(pkt);
+		goto unlock;
+	}
+
 	NET_DBG("%sctx=%p, pkt=%p, st=%d, user_data=%p", "", ctx, pkt, status,
 		user_data);
 
@@ -791,24 +801,27 @@ static int sock_get_pkt_src_addr(struct net_context *ctx,
 	uint16_t *port;
 	enum net_ip_protocol proto = net_context_get_proto(ctx);
 	enum net_sock_type type = net_context_get_type(ctx);
+	net_sa_family_t family;
+	bool map_ipv4;
 
 	if (!addr || !pkt) {
 		return -EINVAL;
 	}
 
+	family = net_pkt_family(pkt);
+	map_ipv4 = IS_ENABLED(CONFIG_NET_IPV4_MAPPING_TO_IPV6) && family == NET_AF_INET &&
+		   net_context_get_family(ctx) == NET_AF_INET6 && !net_context_is_v6only_set(ctx);
+
 	net_pkt_cursor_backup(pkt, &backup);
 	net_pkt_cursor_init(pkt);
 
-	addr->sa_family = net_pkt_family(pkt);
-
-	if (IS_ENABLED(CONFIG_NET_IPV4) &&
-	    net_pkt_family(pkt) == NET_AF_INET) {
+	if (IS_ENABLED(CONFIG_NET_IPV4) && family == NET_AF_INET) {
 		NET_PKT_DATA_ACCESS_CONTIGUOUS_DEFINE(ipv4_access,
 						      struct net_ipv4_hdr);
 		struct net_sockaddr_in *addr4 = net_sin(addr);
 		struct net_ipv4_hdr *ipv4_hdr;
 
-		if (addrlen < sizeof(struct net_sockaddr_in)) {
+		if (addrlen < (map_ipv4 ? sizeof(struct net_sockaddr_in6) : sizeof(*addr4))) {
 			ret = -EINVAL;
 			goto error;
 		}
@@ -824,8 +837,7 @@ static int sock_get_pkt_src_addr(struct net_context *ctx,
 
 		net_ipv4_addr_copy_raw((uint8_t *)&addr4->sin_addr, ipv4_hdr->src);
 		port = &addr4->sin_port;
-	} else if (IS_ENABLED(CONFIG_NET_IPV6) &&
-		   net_pkt_family(pkt) == NET_AF_INET6) {
+	} else if (IS_ENABLED(CONFIG_NET_IPV6) && family == NET_AF_INET6) {
 		NET_PKT_DATA_ACCESS_CONTIGUOUS_DEFINE(ipv6_access,
 						      struct net_ipv6_hdr);
 		struct net_sockaddr_in6 *addr6 = net_sin6(addr);
@@ -882,14 +894,15 @@ static int sock_get_pkt_src_addr(struct net_context *ctx,
 		ret = -ENOTSUP;
 	}
 
-	if (IS_ENABLED(CONFIG_NET_IPV4_MAPPING_TO_IPV6) && net_pkt_family(pkt) == NET_AF_INET &&
-	    net_context_get_family(ctx) == NET_AF_INET6 && !net_context_is_v6only_set(ctx)) {
+	if (map_ipv4) {
 		struct net_sockaddr_in6 mapped_addr;
 
 		net_ipv6_addr_create_v4_mapped(&net_sin(addr)->sin_addr, &(mapped_addr.sin6_addr));
 		net_ipaddr_copy(&net_sin6(addr)->sin6_addr, &mapped_addr.sin6_addr);
-		addr->sa_family = NET_AF_INET6;
+		family = NET_AF_INET6;
 	}
+
+	addr->sa_family = family;
 
 error:
 	net_pkt_cursor_restore(pkt, &backup);
@@ -918,7 +931,7 @@ static int sock_get_offload_pkt_src_addr(struct net_pkt *pkt,
 {
 	int ret = 0;
 
-	if (!addr || !pkt) {
+	if (addr == NULL || pkt == NULL || addrlen < sizeof(addr->sa_family)) {
 		return -EINVAL;
 	}
 
@@ -1256,10 +1269,14 @@ static int update_msg_controllen(struct net_msghdr *msg)
 	size_t cmsg_space = 0;
 
 	for (cmsg = NET_CMSG_FIRSTHDR(msg); cmsg != NULL; cmsg = NET_CMSG_NXTHDR(msg, cmsg)) {
-		if (cmsg->cmsg_len == 0) {
+		size_t left = (uint8_t *)msg->msg_control + msg->msg_controllen - (uint8_t *)cmsg;
+
+		/* Stop at the unused part of the buffer or at a header that does not fit */
+		if (cmsg->cmsg_len < sizeof(struct net_cmsghdr) || cmsg->cmsg_len > left) {
 			break;
 		}
-		cmsg_space += NET_ALIGN_H(cmsg->cmsg_len);
+
+		cmsg_space += MIN(NET_ALIGN_H(cmsg->cmsg_len), left);
 	}
 	msg->msg_controllen = cmsg_space;
 
@@ -1485,11 +1502,15 @@ fail:
 	return -1;
 }
 
+/* With MSG_PEEK, peek_offset bytes from the head of the queue are skipped: the
+ * caller already copied them in this call.
+ */
 static size_t zsock_recv_stream_immediate(struct net_context *ctx, uint8_t **buf, size_t *max_len,
-					  int flags)
+					  int flags, size_t peek_offset)
 {
 	size_t len;
 	size_t pkt_len;
+	size_t skip;
 	size_t recv_len = 0;
 	struct net_pkt *pkt;
 	struct net_pkt_cursor backup;
@@ -1512,13 +1533,16 @@ static size_t zsock_recv_stream_immediate(struct net_context *ctx, uint8_t **buf
 		}
 
 		pkt_len = net_pkt_remaining_data(pkt);
-		len = MIN(_max_len, pkt_len);
+		skip = peek ? MIN(peek_offset, pkt_len) : 0U;
+		peek_offset -= skip;
+		len = MIN(_max_len, pkt_len - skip);
 		recv_len += len;
 		_max_len -= len;
 
 		if (do_recv && len > 0) {
 			if (peek) {
 				net_pkt_cursor_backup(pkt, &backup);
+				net_pkt_skip(pkt, skip);
 			}
 
 			net_pkt_read(pkt, *buf, len);
@@ -1569,7 +1593,7 @@ static size_t zsock_recv_stream_immediate(struct net_context *ctx, uint8_t **buf
 
 static int zsock_fionread_ctx(struct net_context *ctx)
 {
-	size_t ret = zsock_recv_stream_immediate(ctx, NULL, NULL, 0);
+	size_t ret = zsock_recv_stream_immediate(ctx, NULL, NULL, 0, 0);
 
 	return MIN(ret, INT_MAX);
 }
@@ -1595,6 +1619,41 @@ static int zsock_fionwrite_ctx(struct net_context *ctx)
 	return outq_bytes;
 }
 
+/* Open the receive window by the data consumed, while recv() waits for more */
+static void zsock_recv_stream_consumed(struct net_context *ctx, size_t len, int flags)
+{
+	if (len > 0 && !(flags & ZSOCK_MSG_PEEK)) {
+		net_context_update_recv_wnd(ctx, len);
+	}
+}
+
+/* Wait for the next packet, even if the queue already holds data */
+static int zsock_wait_more_data(struct net_context *ctx, k_timeout_t *timeout)
+{
+	int ret;
+
+	if (ctx->cond.lock == NULL) {
+		return -EINVAL;
+	}
+
+	ret = k_condvar_wait(&ctx->cond.recv, ctx->cond.lock, *timeout);
+	if (ret < 0) {
+		return ret;
+	}
+
+	if (sock_is_error(ctx)) {
+		return -sock_get_error(ctx);
+	}
+
+	return 0;
+}
+
+/* True when MSG_PEEK has already copied everything queued */
+static bool zsock_peeked_all(struct net_context *ctx, size_t peeked)
+{
+	return zsock_recv_stream_immediate(ctx, NULL, NULL, 0, 0) <= peeked;
+}
+
 static ssize_t zsock_recv_stream_timed(struct net_context *ctx, struct net_msghdr *msg,
 				       uint8_t *buf, size_t max_len,
 				       int flags, k_timeout_t timeout)
@@ -1603,6 +1662,7 @@ static ssize_t zsock_recv_stream_timed(struct net_context *ctx, struct net_msghd
 	k_timepoint_t end;
 	size_t recv_len = 0, iovec = 0, available_len;
 	const bool waitall = (flags & ZSOCK_MSG_WAITALL) == ZSOCK_MSG_WAITALL;
+	const bool peek = (flags & ZSOCK_MSG_PEEK) == ZSOCK_MSG_PEEK;
 
 	if (msg != NULL && buf == NULL) {
 		if (msg->msg_iovlen < 1) {
@@ -1614,6 +1674,23 @@ static ssize_t zsock_recv_stream_timed(struct net_context *ctx, struct net_msghd
 	}
 
 	for (end = sys_timepoint_calc(timeout); max_len > 0; timeout = sys_timepoint_timeout(end)) {
+
+		/* Peeked data stays queued, so only a new packet can add to it */
+		if (peek && waitall && recv_len > 0 && zsock_peeked_all(ctx, recv_len)) {
+			struct net_pkt *last = k_fifo_peek_tail(&ctx->recv_q);
+
+			if (sock_is_error(ctx) || sock_is_eof(ctx) ||
+			    (last != NULL && net_pkt_eof(last)) ||
+			    K_TIMEOUT_EQ(timeout, K_NO_WAIT)) {
+				break;
+			}
+
+			if (zsock_wait_more_data(ctx, &timeout) < 0) {
+				break;
+			}
+
+			continue;
+		}
 
 		/* Drain any buffered data before reporting a pending error or
 		 * EOF. This ensures data received before the connection was
@@ -1658,8 +1735,10 @@ static ssize_t zsock_recv_stream_timed(struct net_context *ctx, struct net_msghd
 
 		if (msg != NULL) {
 again:
-			res = zsock_recv_stream_immediate(ctx, &buf, &available_len, flags);
+			res = zsock_recv_stream_immediate(ctx, &buf, &available_len, flags,
+							  recv_len);
 			recv_len += res;
+			zsock_recv_stream_consumed(ctx, res, flags);
 
 			if (res == 0 && K_TIMEOUT_EQ(timeout, K_NO_WAIT)) {
 				if (recv_len == 0) {
@@ -1669,7 +1748,6 @@ again:
 				break;
 			}
 
-			buf = (uint8_t *)(msg->msg_iov[iovec].iov_base) + res;
 			max_len -= res;
 
 			if (available_len == 0) {
@@ -1692,8 +1770,9 @@ again:
 			}
 
 		} else {
-			res = zsock_recv_stream_immediate(ctx, &buf, &max_len, flags);
+			res = zsock_recv_stream_immediate(ctx, &buf, &max_len, flags, recv_len);
 			recv_len += res;
+			zsock_recv_stream_consumed(ctx, res, flags);
 
 			if (res == 0 && K_TIMEOUT_EQ(timeout, K_NO_WAIT)) {
 				if (recv_len == 0) {
@@ -1753,10 +1832,6 @@ static ssize_t zsock_recv_stream(struct net_context *ctx, struct net_msghdr *msg
 	if (res < 0) {
 		errno = -res;
 		return -1;
-	}
-
-	if (!(flags & ZSOCK_MSG_PEEK)) {
-		net_context_update_recv_wnd(ctx, recv_len);
 	}
 
 	return recv_len;
@@ -2292,6 +2367,15 @@ int zsock_getsockopt_ctx(struct net_context *ctx, int level, int optname,
 		switch (optname) {
 		case ZSOCK_TCP_NODELAY:
 			ret = net_tcp_get_option(ctx, TCP_OPT_NODELAY, optval, optlen);
+			if (ret < 0) {
+				errno = -ret;
+				return -1;
+			}
+
+			return 0;
+
+		case ZSOCK_TCP_QUICKACK:
+			ret = net_tcp_get_option(ctx, TCP_OPT_QUICKACK, optval, optlen);
 			if (ret < 0) {
 				errno = -ret;
 				return -1;
@@ -3024,6 +3108,15 @@ int zsock_setsockopt_ctx(struct net_context *ctx, int level, int optname,
 		case ZSOCK_TCP_NODELAY:
 			ret = net_tcp_set_option(ctx,
 						 TCP_OPT_NODELAY, optval, optlen);
+			if (ret < 0) {
+				errno = -ret;
+				return -1;
+			}
+
+			return 0;
+
+		case ZSOCK_TCP_QUICKACK:
+			ret = net_tcp_set_option(ctx, TCP_OPT_QUICKACK, optval, optlen);
 			if (ret < 0) {
 				errno = -ret;
 				return -1;

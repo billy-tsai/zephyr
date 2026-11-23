@@ -108,6 +108,7 @@ tests:
       - platform:mimxrt1160_evk/mimxrt1166/cm7:"DTC_OVERLAY_FILE=nxp/dut_lpuart2_loopback.overlay"
       - platform:mimxrt1170_evk@A/mimxrt1176/cm7:"DTC_OVERLAY_FILE=nxp/dut_lpuart2_loopback.overlay"
       - platform:mimxrt1170_evk@B/mimxrt1176/cm7:"DTC_OVERLAY_FILE=nxp/dut_lpuart2_loopback.overlay"
+      - platform:frdm_imxrt1152/mimxrt1152:"DTC_OVERLAY_FILE=nxp/dut_lpuart8_loopback.overlay;nxp/enable_edma0.overlay"
       - platform:vmu_rt1170/mimxrt1176/cm7:"DTC_OVERLAY_FILE=nxp/dut_lpuart4_loopback.overlay"
       - platform:mimxrt1180_evk/mimxrt1189/cm33:"DTC_OVERLAY_FILE=nxp/dut_lpuart3_loopback.overlay"
       - platform:mimxrt1050_evk/mimxrt1052/hyperflash:"DTC_OVERLAY_FILE=nxp/dut_lpuart3_loopback.overlay"
@@ -208,8 +209,8 @@ tests:
     extra_configs:
       - CONFIG_PM=y
       - CONFIG_PM_DEVICE=y
-      - CONFIG_ESP32_PM_POWER_DOWN_PERIPHERAL_IN_LIGHT_SLEEP=y
-      - CONFIG_ESP32_SLEEP_POWER_DOWN_FLASH=y
+      - CONFIG_SOC_FAMILY_ESPRESSIF_PM_POWER_DOWN_PERIPHERAL_IN_LIGHT_SLEEP=y
+      - CONFIG_SOC_FAMILY_ESPRESSIF_SLEEP_POWER_DOWN_FLASH=y
   drivers.uart.async_api.renesas_ra8_sci_b.dmac:
     filter: CONFIG_SERIAL_SUPPORT_ASYNC and CONFIG_UART_RA8_SCI_B_UART_DMAC
     platform_allow:

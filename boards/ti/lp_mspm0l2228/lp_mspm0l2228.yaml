@@ -9,9 +9,12 @@ toolchain:
 ram: 32
 flash: 256
 supported:
+  - adc
   - gpio
+  - hwinfo
   - pinctrl
   - uart
+  - pwm
   - spi
   - vref
   - counter

@@ -67,7 +67,7 @@ static bool thread2_ready;
 static int cpu_t1;
 static int cpu_t2;
 static int cpu_t3;
-static int cpu_t4;
+static volatile int cpu_t4 = -1;
 
 static struct k_timer my_timer;
 
@@ -178,6 +178,39 @@ void thread2_entry(void *p1, void *p2, void *p3)
 	zassert_true(false, "This message should not appear!");
 }
 
+/**
+ * @brief Test inter-processor reschedule signalling under cascading IPIs
+ *
+ * @ingroup kernel_smp_tests
+ *
+ * @details With CPU-mask affinity and cascading IPIs enabled, a thread
+ * preempted by a CPU-mask-restricted thread triggers additional IPIs so the
+ * system settles on a valid set of highest-priority runnable threads across
+ * the CPUs. This exercises the inter-processor reschedule signalling.
+ *
+ * The scenario builds four threads: the test thread (T1), a low priority
+ * thread on the other CPU (T2), a high priority thread pinned to T1's CPU
+ * (T3), and a medium-low priority unpinned thread (T4). Waking T3 and T4 while
+ * interrupts are locked forces T3 onto T1's CPU, which in turn must cascade an
+ * IPI that moves T1 onto the CPU freed by T4.
+ *
+ * Test steps:
+ * - Create T3 (high priority) and T4 (medium-low priority) and let both block
+ *   on an event.
+ * - Pin T3 to the CPU currently running the test thread.
+ * - Create T2 on the other CPU and spin until it signals readiness.
+ * - Arm a timer as a watchdog against a system hang.
+ * - Lock interrupts on the test thread's CPU, flag T2 to wake T3 and T4, and
+ *   busy-wait so the IPI stays pending.
+ * - Unlock interrupts to let the IPI cascade run, then busy-wait again.
+ *
+ * Expected result:
+ * - The watchdog timer does not expire, and the test thread has been migrated
+ *   to a different CPU by the cascaded IPI.
+ *
+ * @see k_thread_cpu_pin()
+ * @see k_event_set()
+ */
 ZTEST(ipi_cascade, test_ipi_cascade)
 {
 	int  key;
@@ -233,18 +266,28 @@ ZTEST(ipi_cascade, test_ipi_cascade)
 
 	thread1_ready = true;
 
-	k_busy_wait(1000);   /* Busy wait for 1 ms */
+	/*
+	 * Wait for T4 to run: T2 has then woken T3 and T4, and an IPI is
+	 * pending for this CPU. Don't assume this takes less than a few
+	 * ms: QEMU without icount follows the host clock, which may stall
+	 * the other vCPU.
+	 */
+	for (int i = 0; i < 10000 && cpu_t4 < 0; i++) {
+		k_busy_wait(100);
+	}
 
 	/*
 	 * 9. Unlocking interrupts allows the IPI from to be processed.
 	 * This will cause the current thread (T1) to be switched out for T3.
 	 * An IPI cascade is expected to occur resulting in switching
-	 * out T4 for T1. Busy wait again to ensure that the IPI is detected
-	 * and processed.
+	 * out T4 for T1. Wait until T1 runs on the other CPU, or until the
+	 * monitoring timer gives up.
 	 */
 
 	arch_irq_unlock(key);
-	k_busy_wait(1000);   /* Busy wait for 1 ms */
+	while (!timer_expired && _current->base.cpu == cpu_t1) {
+		k_busy_wait(100);
+	}
 
 	zassert_false(timer_expired, "Test terminated by timer");
 

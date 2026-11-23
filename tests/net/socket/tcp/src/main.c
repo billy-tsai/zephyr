@@ -1249,6 +1249,22 @@ ZTEST_USER(net_socket_tcp, test_v4_sendto_recvmsg)
 	zassert_equal(net_sin(&addr)->sin_port, net_htons(CLIENT_PORT), "Wrong port");
 	zassert_true(net_ipv4_is_addr_loopback(&net_sin(&addr)->sin_addr), "Wrong address");
 
+	/* Peek in two chunks, the second one continues where the first ends */
+	io_vector[0].iov_base = buf2;
+	io_vector[0].iov_len = sizeof(buf2);
+	io_vector[1].iov_base = buf3;
+	io_vector[1].iov_len = sizeof(buf3);
+
+	memset(&msg, 0, sizeof(msg));
+	msg.msg_iov = io_vector;
+	msg.msg_iovlen = 2;
+
+	len = strlen(TEST_STR_SMALL);
+	test_recvmsg(new_sock, &msg, ZSOCK_MSG_PEEK, len, __LINE__);
+	zassert_mem_equal(buf2, TEST_STR_SMALL, sizeof(buf2), "wrong data in %s", "iov[0]");
+	zassert_mem_equal(buf3, &TEST_STR_SMALL[sizeof(buf2)], len - sizeof(buf2),
+			  "wrong data in %s", "iov[1]");
+
 	/* Then in two chunks */
 	io_vector[0].iov_base = buf2;
 	io_vector[0].iov_len = sizeof(buf2);
@@ -1325,6 +1341,123 @@ ZTEST_USER(net_socket_tcp, test_v4_sendto_recvmsg)
 	zassert_equal(addr.sa_family, NET_AF_INET, "Wrong family");
 	zassert_equal(net_sin(&addr)->sin_port, net_htons(CLIENT_PORT), "Wrong port");
 	zassert_true(net_ipv4_is_addr_loopback(&net_sin(&addr)->sin_addr), "Wrong address");
+
+	test_close(new_sock);
+	test_close(s_sock);
+	test_close(c_sock);
+
+	k_sleep(TCP_TEARDOWN_TIMEOUT);
+}
+
+/* recvmsg() copies at most msg_namelen bytes of the peer address and still
+ * reports the full address size in msg_namelen.
+ */
+ZTEST_USER(net_socket_tcp, test_v4_recvmsg_short_namelen)
+{
+	int c_sock;
+	int s_sock;
+	int new_sock;
+	struct net_sockaddr_in c_saddr;
+	struct net_sockaddr_in s_saddr;
+	struct net_sockaddr_in6 addr;
+	uint8_t unchanged[sizeof(addr)];
+	char buf[sizeof(TEST_STR_SMALL)];
+	struct net_iovec io_vector[1];
+	struct net_msghdr msg;
+
+	prepare_sock_tcp_v4(MY_IPV4_ADDR, CLIENT_PORT, &c_sock, &c_saddr);
+	prepare_sock_tcp_v4(MY_IPV4_ADDR, SERVER_PORT, &s_sock, &s_saddr);
+
+	test_bind(c_sock, (struct net_sockaddr *)&c_saddr, sizeof(c_saddr));
+	test_bind(s_sock, (struct net_sockaddr *)&s_saddr, sizeof(s_saddr));
+	test_listen(s_sock);
+
+	test_connect(c_sock, (struct net_sockaddr *)&s_saddr, sizeof(s_saddr));
+	test_send(c_sock, TEST_STR_SMALL, strlen(TEST_STR_SMALL), 0);
+
+	test_accept(s_sock, &new_sock, NULL, NULL);
+
+	(void)memset(&addr, 0xaa, sizeof(addr));
+	(void)memset(unchanged, 0xaa, sizeof(unchanged));
+
+	io_vector[0].iov_base = buf;
+	io_vector[0].iov_len = sizeof(buf);
+
+	(void)memset(&msg, 0, sizeof(msg));
+	msg.msg_iov = io_vector;
+	msg.msg_iovlen = 1;
+	msg.msg_name = &addr;
+	msg.msg_namelen = 1U;
+
+	test_recvmsg(new_sock, &msg, 0, strlen(TEST_STR_SMALL), __LINE__);
+	zassert_mem_equal(buf, TEST_STR_SMALL, strlen(TEST_STR_SMALL), "wrong data");
+	zassert_equal(msg.msg_namelen, sizeof(struct net_sockaddr_in), "wrong addrlen");
+	zassert_mem_equal((uint8_t *)&addr + 1, &unchanged[1], sizeof(addr) - 1,
+			  "recvmsg wrote past msg_namelen");
+
+	test_close(new_sock);
+	test_close(s_sock);
+	test_close(c_sock);
+
+	k_sleep(TCP_TEARDOWN_TIMEOUT);
+}
+
+/* recvmsg() with MSG_PEEK and without MSG_WAITALL returns once the queued data is
+ * peeked, also when a full iovec is followed by NULL or empty ones. Runs in kernel
+ * mode, as the recvmsg() syscall verifier rejects zero-length iovecs.
+ */
+ZTEST(net_socket_tcp, test_v4_recvmsg_peek_empty_iovec)
+{
+	int c_sock;
+	int s_sock;
+	int new_sock;
+	struct net_sockaddr_in c_saddr;
+	struct net_sockaddr_in s_saddr;
+	struct net_sockaddr_in addr;
+	net_socklen_t addrlen = sizeof(addr);
+	struct timeval timeo_optval = {
+		.tv_sec = 1,
+		.tv_usec = 0,
+	};
+	char buf[5] = { 0 };
+	char buf2[5];
+	struct net_iovec io_vector[4] = {
+		{ .iov_base = buf, .iov_len = sizeof(buf) },
+		{ .iov_base = NULL, .iov_len = 0 },
+		{ .iov_base = buf2, .iov_len = 0 },
+		{ .iov_base = buf2, .iov_len = sizeof(buf2) },
+	};
+	struct net_msghdr msg = {
+		.msg_iov = io_vector,
+		.msg_iovlen = ARRAY_SIZE(io_vector),
+	};
+	uint32_t start;
+	uint32_t elapsed;
+	int ret;
+
+	prepare_sock_tcp_v4(MY_IPV4_ADDR, ANY_PORT, &c_sock, &c_saddr);
+	prepare_sock_tcp_v4(MY_IPV4_ADDR, SERVER_PORT, &s_sock, &s_saddr);
+
+	test_bind(s_sock, (struct net_sockaddr *)&s_saddr, sizeof(s_saddr));
+	test_listen(s_sock);
+
+	test_connect(c_sock, (struct net_sockaddr *)&s_saddr, sizeof(s_saddr));
+	test_accept(s_sock, &new_sock, (struct net_sockaddr *)&addr, &addrlen);
+
+	ret = zsock_setsockopt(new_sock, ZSOCK_SOL_SOCKET, ZSOCK_SO_RCVTIMEO, &timeo_optval,
+			       sizeof(timeo_optval));
+	zassert_equal(ret, 0, "setsockopt failed (%d)", errno);
+
+	test_send(c_sock, TEST_STR_SMALL, sizeof(buf), 0);
+	k_msleep(THREAD_SLEEP);
+
+	start = k_uptime_get_32();
+	ret = zsock_recvmsg(new_sock, &msg, ZSOCK_MSG_PEEK);
+	elapsed = k_uptime_get_32() - start;
+
+	zassert_equal(ret, sizeof(buf), "Unexpected length %d", ret);
+	zassert_mem_equal(buf, TEST_STR_SMALL, sizeof(buf), "Wrong data");
+	zassert_true(elapsed < 500, "Waited %u ms", elapsed);
 
 	test_close(new_sock);
 	test_close(s_sock);
@@ -2343,6 +2476,123 @@ static void test_msg_waitall_tx_work_handler(struct k_work *work)
 	}
 }
 
+/* recvmsg() with MSG_WAITALL fills each iovec in several reads, one byte each */
+static void test_msg_waitall_recvmsg(int c_sock, int new_sock)
+{
+	static const char data[] = "0123456789";
+	struct test_msg_waitall_data test_data = {
+		.sock = c_sock,
+		.data = (const uint8_t *)data,
+		.offset = 0,
+		.retries = sizeof(data) - 1,
+	};
+	uint8_t rx_buf[sizeof(data) - 1] = { 0 };
+	struct net_iovec iov[2] = {
+		{ .iov_base = rx_buf, .iov_len = sizeof(rx_buf) / 2 },
+		{ .iov_base = rx_buf + sizeof(rx_buf) / 2,
+		  .iov_len = sizeof(rx_buf) - sizeof(rx_buf) / 2 },
+	};
+	struct net_msghdr msg = {
+		.msg_iov = iov,
+		.msg_iovlen = ARRAY_SIZE(iov),
+	};
+	struct k_work_sync sync;
+	ssize_t ret;
+
+	k_work_init_delayable(&test_data.tx_work, test_msg_waitall_tx_work_handler);
+	k_work_reschedule(&test_data.tx_work, K_MSEC(10));
+
+	ret = zsock_recvmsg(new_sock, &msg, ZSOCK_MSG_WAITALL);
+	(void)k_work_cancel_delayable_sync(&test_data.tx_work, &sync);
+
+	zexpect_equal(ret, sizeof(rx_buf), "Invalid length received (%zd)", ret);
+	zexpect_mem_equal(rx_buf, data, sizeof(rx_buf), "Invalid data received");
+}
+
+/* MSG_PEEK | MSG_WAITALL waits for data arriving after what it already peeked */
+static void test_msg_waitall_peek(int c_sock, int new_sock)
+{
+	struct test_msg_waitall_data test_data = {
+		.sock = c_sock,
+		.data = TEST_STR_SMALL,
+		.offset = 0,
+		.retries = 5,
+	};
+	struct timeval timeo_optval = {
+		.tv_sec = 1,
+		.tv_usec = 0,
+	};
+	uint8_t rx_buf[5] = { 0 };
+	struct k_work_sync sync;
+	ssize_t ret;
+
+	ret = zsock_setsockopt(new_sock, ZSOCK_SOL_SOCKET, ZSOCK_SO_RCVTIMEO, &timeo_optval,
+			       sizeof(timeo_optval));
+	zassert_equal(ret, 0, "setsockopt failed (%d)", errno);
+
+	k_work_init_delayable(&test_data.tx_work, test_msg_waitall_tx_work_handler);
+	k_work_reschedule(&test_data.tx_work, K_MSEC(10));
+
+	ret = zsock_recv(new_sock, rx_buf, sizeof(rx_buf), ZSOCK_MSG_PEEK | ZSOCK_MSG_WAITALL);
+	(void)k_work_cancel_delayable_sync(&test_data.tx_work, &sync);
+
+	zassert_equal(ret, sizeof(rx_buf), "Invalid length peeked (%zd)", ret);
+	zassert_mem_equal(rx_buf, TEST_STR_SMALL, sizeof(rx_buf), "Invalid data peeked");
+
+	/* The peeked data is still queued */
+	memset(rx_buf, 0, sizeof(rx_buf));
+	ret = zsock_recv(new_sock, rx_buf, sizeof(rx_buf), ZSOCK_MSG_DONTWAIT);
+	zassert_equal(ret, sizeof(rx_buf), "Invalid length received (%zd)", ret);
+	zassert_mem_equal(rx_buf, TEST_STR_SMALL, sizeof(rx_buf), "Invalid data received");
+}
+
+/* recvmsg() with MSG_PEEK | MSG_WAITALL fills the iovecs in order while data trickles in */
+static void test_msg_waitall_peek_recvmsg(int c_sock, int new_sock)
+{
+	static const char data[] = "0123456789";
+	struct test_msg_waitall_data test_data = {
+		.sock = c_sock,
+		.data = (const uint8_t *)data,
+		.offset = 0,
+		.retries = sizeof(data) - 1,
+	};
+	struct timeval timeo_optval = {
+		.tv_sec = 1,
+		.tv_usec = 0,
+	};
+	uint8_t rx_buf[sizeof(data) - 1] = { 0 };
+	struct net_iovec iov[2] = {
+		{ .iov_base = rx_buf, .iov_len = sizeof(rx_buf) / 2 },
+		{ .iov_base = rx_buf + sizeof(rx_buf) / 2,
+		  .iov_len = sizeof(rx_buf) - sizeof(rx_buf) / 2 },
+	};
+	struct net_msghdr msg = {
+		.msg_iov = iov,
+		.msg_iovlen = ARRAY_SIZE(iov),
+	};
+	struct k_work_sync sync;
+	ssize_t ret;
+
+	ret = zsock_setsockopt(new_sock, ZSOCK_SOL_SOCKET, ZSOCK_SO_RCVTIMEO, &timeo_optval,
+			       sizeof(timeo_optval));
+	zassert_equal(ret, 0, "setsockopt failed (%d)", errno);
+
+	k_work_init_delayable(&test_data.tx_work, test_msg_waitall_tx_work_handler);
+	k_work_reschedule(&test_data.tx_work, K_MSEC(10));
+
+	ret = zsock_recvmsg(new_sock, &msg, ZSOCK_MSG_PEEK | ZSOCK_MSG_WAITALL);
+	(void)k_work_cancel_delayable_sync(&test_data.tx_work, &sync);
+
+	zassert_equal(ret, sizeof(rx_buf), "Invalid length peeked (%zd)", ret);
+	zassert_mem_equal(rx_buf, data, sizeof(rx_buf), "Invalid data peeked");
+
+	/* The peeked data is still queued */
+	memset(rx_buf, 0, sizeof(rx_buf));
+	ret = zsock_recv(new_sock, rx_buf, sizeof(rx_buf), ZSOCK_MSG_DONTWAIT);
+	zassert_equal(ret, sizeof(rx_buf), "Invalid length received (%zd)", ret);
+	zassert_mem_equal(rx_buf, data, sizeof(rx_buf), "Invalid data received");
+}
+
 ZTEST(net_socket_tcp, test_v4_msg_waitall)
 {
 	struct test_msg_waitall_data test_data = {
@@ -2390,6 +2640,8 @@ ZTEST(net_socket_tcp, test_v4_msg_waitall)
 			  "Invalid data received");
 	k_work_cancel_delayable(&test_data.tx_work);
 
+	test_msg_waitall_recvmsg(c_sock, new_sock);
+
 	/* MSG_WAITALL + SO_RCVTIMEO - make sure recv returns the amount of data
 	 * received so far
 	 */
@@ -2425,6 +2677,9 @@ ZTEST(net_socket_tcp, test_v4_msg_waitall)
 	zassert_equal(ret, sizeof(rx_buf) - 1, "Invalid length received");
 	zassert_mem_equal(rx_buf, TEST_STR_SMALL, sizeof(rx_buf) - 1,
 			  "Invalid data received");
+
+	test_msg_waitall_peek(c_sock, new_sock);
+	test_msg_waitall_peek_recvmsg(c_sock, new_sock);
 
 	test_close(new_sock);
 	test_close(s_sock);
@@ -2479,6 +2734,8 @@ ZTEST(net_socket_tcp, test_v6_msg_waitall)
 			  "Invalid data received");
 	k_work_cancel_delayable(&test_data.tx_work);
 
+	test_msg_waitall_recvmsg(c_sock, new_sock);
+
 	/* MSG_WAITALL + SO_RCVTIMEO - make sure recv returns the amount of data
 	 * received so far
 	 */
@@ -2511,6 +2768,239 @@ ZTEST(net_socket_tcp, test_v6_msg_waitall)
 	zassert_equal(ret, sizeof(rx_buf) - 1, "Invalid length received");
 	zassert_mem_equal(rx_buf, TEST_STR_SMALL, sizeof(rx_buf) - 1,
 			  "Invalid data received");
+
+	test_msg_waitall_peek(c_sock, new_sock);
+	test_msg_waitall_peek_recvmsg(c_sock, new_sock);
+
+	test_close(new_sock);
+	test_close(s_sock);
+	test_close(c_sock);
+
+	test_context_cleanup();
+}
+
+struct test_close_work_data {
+	struct k_work_delayable work;
+	int sock;
+};
+
+static void test_close_work_handler(struct k_work *work)
+{
+	struct k_work_delayable *dwork = k_work_delayable_from_work(work);
+	struct test_close_work_data *data =
+		CONTAINER_OF(dwork, struct test_close_work_data, work);
+
+	(void)zsock_close(data->sock);
+}
+
+/* MSG_PEEK | MSG_WAITALL returns the data peeked so far when the timeout expires
+ * or the peer closes the connection
+ */
+ZTEST(net_socket_tcp, test_v4_msg_waitall_peek_partial)
+{
+	struct test_msg_waitall_data test_data = {
+		.data = TEST_STR_SMALL,
+		.offset = 0,
+		.retries = 3,
+	};
+	struct test_close_work_data close_data;
+	int c_sock;
+	int s_sock;
+	int new_sock;
+	struct net_sockaddr_in c_saddr;
+	struct net_sockaddr_in s_saddr;
+	struct net_sockaddr_in addr;
+	net_socklen_t addrlen = sizeof(addr);
+	struct timeval timeo_optval = {
+		.tv_sec = 0,
+		.tv_usec = 200000,
+	};
+	uint8_t rx_buf[5] = { 0 };
+	struct k_work_sync sync;
+	uint32_t start;
+	uint32_t elapsed;
+	ssize_t ret;
+
+	prepare_sock_tcp_v4(MY_IPV4_ADDR, ANY_PORT, &c_sock, &c_saddr);
+	prepare_sock_tcp_v4(MY_IPV4_ADDR, SERVER_PORT, &s_sock, &s_saddr);
+
+	test_bind(s_sock, (struct net_sockaddr *)&s_saddr, sizeof(s_saddr));
+	test_listen(s_sock);
+
+	test_connect(c_sock, (struct net_sockaddr *)&s_saddr, sizeof(s_saddr));
+	test_accept(s_sock, &new_sock, (struct net_sockaddr *)&addr, &addrlen);
+
+	ret = zsock_setsockopt(new_sock, ZSOCK_SOL_SOCKET, ZSOCK_SO_RCVTIMEO, &timeo_optval,
+			       sizeof(timeo_optval));
+	zassert_equal(ret, 0, "setsockopt failed (%d)", errno);
+
+	/* Timeout: only 3 of the 5 bytes arrive */
+	test_data.sock = c_sock;
+	k_work_init_delayable(&test_data.tx_work, test_msg_waitall_tx_work_handler);
+	k_work_reschedule(&test_data.tx_work, K_MSEC(10));
+
+	start = k_uptime_get_32();
+	ret = zsock_recv(new_sock, rx_buf, sizeof(rx_buf), ZSOCK_MSG_PEEK | ZSOCK_MSG_WAITALL);
+	elapsed = k_uptime_get_32() - start;
+	(void)k_work_cancel_delayable_sync(&test_data.tx_work, &sync);
+
+	zassert_equal(ret, 3, "Invalid length peeked (%zd)", ret);
+	zassert_mem_equal(rx_buf, TEST_STR_SMALL, 3, "Invalid data peeked");
+	zassert_true(elapsed >= 200, "Returned after %u ms", elapsed);
+
+	/* Peer close: the same 3 bytes are still queued, then the peer closes */
+	timeo_optval.tv_sec = 1;
+	timeo_optval.tv_usec = 0;
+	ret = zsock_setsockopt(new_sock, ZSOCK_SOL_SOCKET, ZSOCK_SO_RCVTIMEO, &timeo_optval,
+			       sizeof(timeo_optval));
+	zassert_equal(ret, 0, "setsockopt failed (%d)", errno);
+
+	close_data.sock = c_sock;
+	k_work_init_delayable(&close_data.work, test_close_work_handler);
+	k_work_reschedule(&close_data.work, K_MSEC(100));
+
+	memset(rx_buf, 0, sizeof(rx_buf));
+	start = k_uptime_get_32();
+	ret = zsock_recv(new_sock, rx_buf, sizeof(rx_buf), ZSOCK_MSG_PEEK | ZSOCK_MSG_WAITALL);
+	elapsed = k_uptime_get_32() - start;
+	(void)k_work_cancel_delayable_sync(&close_data.work, &sync);
+
+	zassert_equal(ret, 3, "Invalid length peeked (%zd)", ret);
+	zassert_mem_equal(rx_buf, TEST_STR_SMALL, 3, "Invalid data peeked");
+	zassert_true(elapsed < 500, "Waited %u ms", elapsed);
+
+	test_close(new_sock);
+	test_close(s_sock);
+
+	test_context_cleanup();
+}
+
+/* Several receive windows: the peer can send it all only if recv() opens the window.
+ * The peer may fill the default window before it sees the SO_RCVBUF one, so the
+ * length also exceeds the default window.
+ */
+#define TEST_WAITALL_LARGE_LEN    4096
+#define TEST_WAITALL_LARGE_RCVBUF 512
+#define TEST_WAITALL_LARGE_CHUNK  256
+
+struct test_msg_waitall_large_data {
+	struct k_work_delayable tx_work;
+	int sock;
+	size_t offset;
+};
+
+static void test_msg_waitall_large_tx_work_handler(struct k_work *work)
+{
+	struct k_work_delayable *dwork = k_work_delayable_from_work(work);
+	struct test_msg_waitall_large_data *test_data =
+		CONTAINER_OF(dwork, struct test_msg_waitall_large_data, tx_work);
+	uint8_t chunk[TEST_WAITALL_LARGE_CHUNK];
+	size_t len = MIN(sizeof(chunk), TEST_WAITALL_LARGE_LEN - test_data->offset);
+	ssize_t ret;
+
+	for (size_t i = 0; i < len; i++) {
+		chunk[i] = (uint8_t)(test_data->offset + i);
+	}
+
+	ret = zsock_send(test_data->sock, chunk, len, ZSOCK_MSG_DONTWAIT);
+	if (ret > 0) {
+		test_data->offset += ret;
+	}
+
+	if (test_data->offset < TEST_WAITALL_LARGE_LEN) {
+		k_work_reschedule(&test_data->tx_work, K_MSEC(1));
+	}
+}
+
+static void test_msg_waitall_large(int c_sock, int new_sock)
+{
+	static uint8_t rx_buf[TEST_WAITALL_LARGE_LEN];
+	struct test_msg_waitall_large_data test_data = {
+		.sock = c_sock,
+	};
+	struct timeval timeo_optval = {
+		.tv_sec = 2,
+		.tv_usec = 0,
+	};
+	int rcvbuf_optval = TEST_WAITALL_LARGE_RCVBUF;
+	struct k_work_sync sync;
+	int ret;
+
+	memset(rx_buf, 0, sizeof(rx_buf));
+
+	ret = zsock_setsockopt(new_sock, ZSOCK_SOL_SOCKET, ZSOCK_SO_RCVBUF, &rcvbuf_optval,
+			       sizeof(rcvbuf_optval));
+	zassert_equal(ret, 0, "setsockopt failed (%d)", errno);
+
+	/* Bound the test: without the window update the recv() would block forever */
+	ret = zsock_setsockopt(new_sock, ZSOCK_SOL_SOCKET, ZSOCK_SO_RCVTIMEO, &timeo_optval,
+			       sizeof(timeo_optval));
+	zassert_equal(ret, 0, "setsockopt failed (%d)", errno);
+
+	k_work_init_delayable(&test_data.tx_work, test_msg_waitall_large_tx_work_handler);
+	k_work_reschedule(&test_data.tx_work, K_MSEC(10));
+
+	ret = zsock_recv(new_sock, rx_buf, sizeof(rx_buf), ZSOCK_MSG_WAITALL);
+	(void)k_work_cancel_delayable_sync(&test_data.tx_work, &sync);
+
+	zassert_equal(ret, sizeof(rx_buf), "Invalid length received (%d)", ret);
+	for (size_t i = 0; i < sizeof(rx_buf); i++) {
+		zassert_equal(rx_buf[i], (uint8_t)i, "Invalid data at offset %zu", i);
+	}
+}
+
+ZTEST(net_socket_tcp, test_v4_msg_waitall_large)
+{
+	int c_sock;
+	int s_sock;
+	int new_sock;
+	struct net_sockaddr_in c_saddr;
+	struct net_sockaddr_in s_saddr;
+	struct net_sockaddr addr;
+	net_socklen_t addrlen = sizeof(addr);
+
+	prepare_sock_tcp_v4(MY_IPV4_ADDR, ANY_PORT, &c_sock, &c_saddr);
+	prepare_sock_tcp_v4(MY_IPV4_ADDR, SERVER_PORT, &s_sock, &s_saddr);
+
+	test_bind(s_sock, (struct net_sockaddr *)&s_saddr, sizeof(s_saddr));
+	test_listen(s_sock);
+
+	test_connect(c_sock, (struct net_sockaddr *)&s_saddr, sizeof(s_saddr));
+
+	test_accept(s_sock, &new_sock, &addr, &addrlen);
+	zassert_equal(addrlen, sizeof(struct net_sockaddr_in), "Wrong addrlen");
+
+	test_msg_waitall_large(c_sock, new_sock);
+
+	test_close(new_sock);
+	test_close(s_sock);
+	test_close(c_sock);
+
+	test_context_cleanup();
+}
+
+ZTEST(net_socket_tcp, test_v6_msg_waitall_large)
+{
+	int c_sock;
+	int s_sock;
+	int new_sock;
+	struct net_sockaddr_in6 c_saddr;
+	struct net_sockaddr_in6 s_saddr;
+	struct net_sockaddr addr;
+	net_socklen_t addrlen = sizeof(addr);
+
+	prepare_sock_tcp_v6(MY_IPV6_ADDR, ANY_PORT, &c_sock, &c_saddr);
+	prepare_sock_tcp_v6(MY_IPV6_ADDR, SERVER_PORT, &s_sock, &s_saddr);
+
+	test_bind(s_sock, (struct net_sockaddr *)&s_saddr, sizeof(s_saddr));
+	test_listen(s_sock);
+
+	test_connect(c_sock, (struct net_sockaddr *)&s_saddr, sizeof(s_saddr));
+
+	test_accept(s_sock, &new_sock, &addr, &addrlen);
+	zassert_equal(addrlen, sizeof(struct net_sockaddr_in6), "Wrong addrlen");
+
+	test_msg_waitall_large(c_sock, new_sock);
 
 	test_close(new_sock);
 	test_close(s_sock);
@@ -2793,6 +3283,171 @@ ZTEST(net_socket_tcp, test_ioctl_fionread_v4)
 ZTEST(net_socket_tcp, test_ioctl_fionread_v6)
 {
 	test_ioctl_fionread_common(NET_AF_INET6);
+}
+
+/* With TCP_QUICKACK off on the receiver, the ACK of data with PSH set is
+ * delayed, and a reply sent within the delay carries it. The client's Nagle
+ * algorithm makes this visible: it holds its second byte until the first one
+ * is ACKed.
+ */
+static void test_tcp_quickack_common(int af)
+{
+	enum fde {
+		SERVER,
+		CLIENT,
+		ACCEPT,
+	};
+	int fd[] = {-1, -1, -1};
+	net_socklen_t optlen = sizeof(int);
+	int optval = -1;
+	int avail;
+	char c;
+
+	test_ioctl_fionread_setup(af, fd);
+
+	zassert_ok(zsock_getsockopt(fd[SERVER], NET_IPPROTO_TCP, ZSOCK_TCP_QUICKACK, &optval,
+				    &optlen));
+	zassert_equal(optval, 1, "TCP_QUICKACK should be on by default");
+
+	optval = 0;
+	zassert_ok(zsock_setsockopt(fd[SERVER], NET_IPPROTO_TCP, ZSOCK_TCP_QUICKACK, &optval,
+				    sizeof(optval)));
+	optval = -1;
+	zassert_ok(zsock_getsockopt(fd[SERVER], NET_IPPROTO_TCP, ZSOCK_TCP_QUICKACK, &optval,
+				    &optlen));
+	zassert_equal(optval, 0, "TCP_QUICKACK should be off");
+
+	zassert_equal(1, zsock_send(fd[CLIENT], "a", 1, 0));
+	zassert_equal(1, zsock_send(fd[CLIENT], "b", 1, 0));
+
+	/* The ACK of "a" is delayed, so Nagle still holds "b" */
+	k_msleep(CONFIG_NET_TCP_ACK_DELAY / 2);
+	zassert_ok(zsock_ioctl(fd[SERVER], ZFD_IOCTL_FIONREAD, &avail));
+	zassert_equal(1, avail, "exp: 1: act: %d", avail);
+
+	/* The reply carries the ACK of "a", which releases "b" */
+	zassert_equal(1, zsock_send(fd[SERVER], "r", 1, 0));
+	k_msleep(CONFIG_NET_TCP_ACK_DELAY / 4);
+	zassert_ok(zsock_ioctl(fd[SERVER], ZFD_IOCTL_FIONREAD, &avail));
+	zassert_equal(2, avail, "exp: 2: act: %d", avail);
+	zassert_equal(1, zsock_recv(fd[CLIENT], &c, 1, 0));
+	zassert_equal('r', c);
+
+	zsock_close(fd[SERVER]);
+	zsock_close(fd[CLIENT]);
+	zsock_close(fd[ACCEPT]);
+
+	test_context_cleanup();
+}
+
+ZTEST(net_socket_tcp, test_tcp_quickack_v4)
+{
+	test_tcp_quickack_common(NET_AF_INET);
+}
+
+ZTEST(net_socket_tcp, test_tcp_quickack_v6)
+{
+	test_tcp_quickack_common(NET_AF_INET6);
+}
+
+/* Turning TCP_QUICKACK on sends a pending delayed ACK at once, which releases
+ * the byte held by the client's Nagle algorithm well before the delay ends.
+ */
+static void test_tcp_quickack_on_sends_ack_common(int af)
+{
+	enum fde {
+		SERVER,
+		CLIENT,
+		ACCEPT,
+	};
+	int fd[] = {-1, -1, -1};
+	int optval = 0;
+	int avail;
+
+	test_ioctl_fionread_setup(af, fd);
+
+	zassert_ok(zsock_setsockopt(fd[SERVER], NET_IPPROTO_TCP, ZSOCK_TCP_QUICKACK, &optval,
+				    sizeof(optval)));
+
+	zassert_equal(1, zsock_send(fd[CLIENT], "a", 1, 0));
+	zassert_equal(1, zsock_send(fd[CLIENT], "b", 1, 0));
+
+	/* The ACK of "a" is delayed, so Nagle still holds "b" */
+	k_msleep(CONFIG_NET_TCP_ACK_DELAY / 4);
+	zassert_ok(zsock_ioctl(fd[SERVER], ZFD_IOCTL_FIONREAD, &avail));
+	zassert_equal(1, avail, "exp: 1: act: %d", avail);
+
+	/* Turning the option on ACKs "a" at once, which releases "b" */
+	optval = 1;
+	zassert_ok(zsock_setsockopt(fd[SERVER], NET_IPPROTO_TCP, ZSOCK_TCP_QUICKACK, &optval,
+				    sizeof(optval)));
+	k_msleep(CONFIG_NET_TCP_ACK_DELAY / 4);
+	zassert_ok(zsock_ioctl(fd[SERVER], ZFD_IOCTL_FIONREAD, &avail));
+	zassert_equal(2, avail, "exp: 2: act: %d", avail);
+
+	zsock_close(fd[SERVER]);
+	zsock_close(fd[CLIENT]);
+	zsock_close(fd[ACCEPT]);
+
+	test_context_cleanup();
+}
+
+ZTEST(net_socket_tcp, test_tcp_quickack_on_sends_ack_v4)
+{
+	test_tcp_quickack_on_sends_ack_common(NET_AF_INET);
+}
+
+ZTEST(net_socket_tcp, test_tcp_quickack_on_sends_ack_v6)
+{
+	test_tcp_quickack_on_sends_ack_common(NET_AF_INET6);
+}
+
+/* A reply that carries a delayed ACK cancels it: no redundant ACK goes out
+ * when the delay ends. Only IPv4 statistics are enabled in this test suite.
+ */
+ZTEST(net_socket_tcp, test_tcp_no_redundant_delayed_ack_v4)
+{
+	enum fde {
+		SERVER,
+		CLIENT,
+		ACCEPT,
+	};
+	int fd[] = {-1, -1, -1};
+	struct net_stats before;
+	struct net_stats after;
+	int optval = 0;
+	char c;
+
+	test_ioctl_fionread_setup(NET_AF_INET, fd);
+
+	zassert_ok(zsock_setsockopt(fd[SERVER], NET_IPPROTO_TCP, ZSOCK_TCP_QUICKACK, &optval,
+				    sizeof(optval)));
+
+	/* The ACK of "a" is delayed, and the reply carries it */
+	zassert_equal(1, zsock_send(fd[CLIENT], "a", 1, 0));
+	k_msleep(CONFIG_NET_TCP_ACK_DELAY / 4);
+	zassert_equal(1, zsock_recv(fd[SERVER], &c, 1, 0));
+	zassert_equal(1, zsock_send(fd[SERVER], "r", 1, 0));
+
+	/* Let the client ACK the reply, then count what is sent until well
+	 * after the delayed ACK of "a" would have expired.
+	 */
+	k_msleep(CONFIG_NET_TCP_ACK_DELAY / 4);
+	net_mgmt(NET_REQUEST_STATS_GET_ALL, NULL, &before, sizeof(before));
+	k_msleep(CONFIG_NET_TCP_ACK_DELAY);
+	net_mgmt(NET_REQUEST_STATS_GET_ALL, NULL, &after, sizeof(after));
+
+	zassert_equal(before.ipv4.sent, after.ipv4.sent, "Redundant ACK sent (%u packets)",
+		      after.ipv4.sent - before.ipv4.sent);
+
+	zassert_equal(1, zsock_recv(fd[CLIENT], &c, 1, 0));
+	zassert_equal('r', c);
+
+	zsock_close(fd[SERVER]);
+	zsock_close(fd[CLIENT]);
+	zsock_close(fd[ACCEPT]);
+
+	test_context_cleanup();
 }
 
 static void test_ioctl_fionwrite_wait_until_empty(int sock)
